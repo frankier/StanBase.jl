@@ -1,9 +1,9 @@
 import Base: show
 
 """
-# CmdStanModel 
+# GenericCmdStanModel 
 
-Create a CmdStanModel. 
+Create a GenericCmdStanModel. 
 
 ### Required arguments
 ```julia
@@ -33,11 +33,11 @@ Create a CmdStanModel.
 ```
 
 """
-struct CmdStanVariationalModel <: CmdStanModel
+struct CmdStanModel <: AbstractCmdStanModel
   name::AbstractString
   model::AbstractString
+  method::AbstractCmdStanMethod
   n_chains::Vector{Int64}
-  method::CmdStanMethod
   random::Random
   init::Init
   output::Output
@@ -58,8 +58,8 @@ end
 function CmdStanModel(
   name::AbstractString,
   model::AbstractString,
+  method::AbstractCmdStanMethod,
   n_chains=[4];
-  method = method,
   random = Random(),
   init = Init(),
   output = Output(),
@@ -75,13 +75,14 @@ function CmdStanModel(
   
   stan_compile(sm)
   
-  CmdStanModel(name, model, n_chains, method, random, init, output,
+  CmdStanModel(name, model, method, n_chains, random, init, output,
     tmpdir, output_base, exec_path, String[], String[], 
     Cmd[], String[], String[], String[], false, false, sm)
 end
 
 function model_show(io::IO, m::CmdStanModel, compact::Bool)
   println("  name =                    \"$(m.name)\"")
+  println("  method =                   $(m.method)")
   println("  n_chains =                $(get_n_chains(m))")
   println("  output =                  Output()")
   println("    file =                    \"$(m.output.file)\"")

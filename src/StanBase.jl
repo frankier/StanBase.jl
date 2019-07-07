@@ -33,7 +33,10 @@ include("stansamples/stan_summary.jl")
 include("stansamples/read_summary.jl")
 
 export
+  AbstractCmdStanModel,
   CmdStanModel,
+  AbstractCmdStanMethod
+  AbstractCmdline,
   stan_sample,
   read_summary,
   stan_summary

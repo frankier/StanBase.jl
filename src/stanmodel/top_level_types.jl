@@ -18,7 +18,7 @@ Not yet done:
 *  CmdStanGenerate_QuamtitiesModel     : StanGenerate_Quantities.jl
 ```
 """ 
-abstract type CmdStanModel end
+abstract type AbstractCmdStanModel end
 
 """
 
@@ -33,7 +33,7 @@ abstract type CmdStanModel end
 *  Generate_Quamtities:Method          : Generate_Quantities
 ```
 """ 
-abstract type CmdStanMethod end
+abstract type AbstractCmdStanMethod end
 
 """
 
@@ -48,7 +48,7 @@ abstract type CmdStanMethod end
 *  Generate_QuamtitiesCmdline          : Generate_Quantities
 ```
 """ 
-abstract type Cmdline end
+abstract type AbstractCmdline end
 
 """
 

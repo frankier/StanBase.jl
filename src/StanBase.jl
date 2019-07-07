@@ -1,0 +1,3 @@
+module StanBase
+
+end # module

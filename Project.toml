@@ -1,0 +1,15 @@
+name = "StanBase"
+uuid = "d0ee94f6-a23d-54aa-bbe9-7f572d6da7f5"
+authors = ["Rob J Goedman <goedman@mac.com>"]
+version = "0.1.0"
+
+[deps]
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
+
+[compat]
+julia = "^1"

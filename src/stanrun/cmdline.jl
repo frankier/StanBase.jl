@@ -13,7 +13,7 @@ cmdline(m, id)
 * `id::Int64`                          : Chain id
 ```
 """
-function cmdline(m, id)
+function cmdline(m::T, id) where {T <: CmdStanModels}
   
   cmd = ``
   

@@ -1,9 +1,9 @@
 import Base: show
 
 """
-# GenericCmdStanModel 
+# CmdStanModel 
 
-Create a GenericCmdStanModel. 
+Create a BaseModel. 
 
 ### Required arguments
 ```julia
@@ -14,7 +14,6 @@ Create a GenericCmdStanModel.
 ### Optional arguments
 ```julia
 * `n_chains::Vector{Int64}=[4]`        : Optionally updated in stan_sample()
-* `method::CmdStanMethod`         : See ?Method (default: Sample())
 * `random::Random`                     : Random seed settings
 * `output::Output`              : File output options
 * `init::Init`                         : Default interval bound for parameters
@@ -33,10 +32,9 @@ Create a GenericCmdStanModel.
 ```
 
 """
-struct CmdStanModel <: AbstractCmdStanModel
+struct CmdStanModel
   name::AbstractString
   model::AbstractString
-  method::AbstractCmdStanMethod
   n_chains::Vector{Int64}
   random::Random
   init::Init
@@ -58,7 +56,6 @@ end
 function CmdStanModel(
   name::AbstractString,
   model::AbstractString,
-  method::AbstractCmdStanMethod,
   n_chains=[4];
   random = Random(),
   init = Init(),
@@ -75,14 +72,13 @@ function CmdStanModel(
   
   stan_compile(sm)
   
-  CmdStanModel(name, model, method, n_chains, random, init, output,
+  CmdStanModel(name, model, n_chains, random, init, output,
     tmpdir, output_base, exec_path, String[], String[], 
     Cmd[], String[], String[], String[], false, false, sm)
 end
 
 function model_show(io::IO, m::CmdStanModel, compact::Bool)
   println("  name =                    \"$(m.name)\"")
-  println("  method =                   $(m.method)")
   println("  n_chains =                $(get_n_chains(m))")
   println("  output =                  Output()")
   println("    file =                    \"$(m.output.file)\"")

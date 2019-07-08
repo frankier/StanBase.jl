@@ -2,42 +2,42 @@ import Base: show
 
 """
 
-# CmdStanModel
+# CmdStanModels
 
 Base model specialized in:
 
 ### Method
 ```julia
-*  CmdStanSampleModel                  : StanSample.jl
-*  CmdStanOptimizeModel                : StanOptimize.jl
-*  CmdStanVariationalModel          :   StanVariational.jl
+*  SampleModel                         : StanSample.jl
+*  OptimizeModel                       : StanOptimize.jl
+*  VariationalModel                     : StanVariational.jl
 
 Not yet done:
 
-*  CmdStanDiagnoseModel                : StanDiagnose.jl
-*  CmdStanGenerate_QuamtitiesModel     : StanGenerate_Quantities.jl
+*  DiagnoseModel                       : StanDiagnose.jl
+*  Generate_QuamtitiesModel            : StanGenerate_Quantities.jl
 ```
 """ 
-abstract type AbstractCmdStanModel end
+abstract type CmdStanModels end
 
 """
 
-# CmdStanMethod
+# CmdStanMethods
 
 ### Method
 ```julia
-*  Sample::Method                      : Sampling
-*  Optimize::Method                    : Optimization
-*  Diagnose::Method                    : Diagnostics
-*  Variational::Method                 : Variational Bayes
-*  Generate_Quamtities:Method          : Generate_Quantities
+*  Sample                              : Sampling
+*  Optimize                            : Optimization
+*  Diagnose                            : Diagnostics
+*  Variational                         : Variational Bayes
+*  Generate_Quamtities                 : Generate_Quantities
 ```
 """ 
-abstract type AbstractCmdStanMethod end
+abstract type CmdStanMethods end
 
 """
 
-# Cmdline
+# Cmdlines
 
 ### Method
 ```julia
@@ -48,7 +48,7 @@ abstract type AbstractCmdStanMethod end
 *  Generate_QuamtitiesCmdline          : Generate_Quantities
 ```
 """ 
-abstract type AbstractCmdline end
+abstract type Cmdlines end
 
 """
 

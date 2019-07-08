@@ -35,9 +35,7 @@ to an existing file which will be copied to the output directory unless the leng
 When `rm_samples` (default: `true`), remove potential pre-existing sample files after
 compiling the model.
 """
-function stan_sample(m::T; kwargs...) where {T <: CmdStanModels}
-  
-  model = m.csm
+function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
   n_chains = 4
   rm_samples = true
   diagnostics = false
@@ -57,16 +55,15 @@ function stan_sample(m::T; kwargs...) where {T <: CmdStanModels}
     
 end
 
-function _stan_sample(m::T; rm_samples = true) where {T <: CmdStanModels}
+function _stan_sample(model::T; rm_samples = true) where {T <: CmdStanModels}
   
-  model = m.csm
-  rm_samples && rm.(StanRun.find_samples(model.sm))
-  cmds_and_paths = [stan_cmd_and_paths(model, id)
-                    for id in 1:get_n_chains(model)]
-  pmap(cmds_and_paths) do cmd_and_path
-      cmd, (sample_path, log_path) = cmd_and_path
-      success(cmd) ? sample_path : nothing, log_path
-  end
+    rm_samples && rm.(StanRun.find_samples(model.sm))
+    cmds_and_paths = [stan_cmd_and_paths(model, id)
+                      for id in 1:get_n_chains(model)]
+    pmap(cmds_and_paths) do cmd_and_path
+        cmd, (sample_path, log_path) = cmd_and_path
+        success(cmd) ? sample_path : nothing, log_path
+    end
     
 end
 
@@ -75,23 +72,21 @@ $(SIGNATURES)
 
 Run a Stan command. Internal, not exported.
 """
-function stan_cmd_and_paths(m::T, id::Integer) where {T <: CmdStanModels}
+function stan_cmd_and_paths(model::T, id::Integer) where {T <: CmdStanModels}
   
-  model = m.csm
-  append!(model.sample_file, [StanRun.sample_file_path(model.output_base, id)])
-  model.output.file = model.sample_file[id]
-  if length(model.diagnostic_file) > 0
-    model.output.diagnostic_file = model.diagnostic_file[id]
-  end
-  append!(model.log_file, [StanRun.log_file_path(model.output_base, id)])
-  append!(model.cmds, [cmdline(model, id)])
+    append!(model.sample_file, [StanRun.sample_file_path(model.output_base, id)])
+    model.output.file = model.sample_file[id]
+    if length(model.diagnostic_file) > 0
+      model.output.diagnostic_file = model.diagnostic_file[id]
+    end
+    append!(model.log_file, [StanRun.log_file_path(model.output_base, id)])
+    append!(model.cmds, [cmdline(model, id)])
     pipeline(model.cmds[id]; stdout=model.log_file[id]), (model.sample_file[id], model.log_file[id])
     
 end
 
-function update_R_files(m, input, n_chains, fname_part="data")
+function update_R_files(model, input, n_chains, fname_part="data")
   
-  model = m.csm
   model_field = fname_part == "data" ? model.data_file : model.init_file
   if typeof(input) <: NamedTuple || typeof(input) <: Dict
     for i in 1:n_chains
@@ -123,9 +118,8 @@ function update_R_files(m, input, n_chains, fname_part="data")
   
 end
 
-function setup_diagnostics(m, n_chains)
+function setup_diagnostics(model, n_chains)
   
-  model = m.csm
   for i in 1:n_chains
     append!(model.diagnostic_file, [model.output_base*"_diagnostic_$i.log"])
   end

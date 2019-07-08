@@ -42,10 +42,7 @@ function stan_sample(m::T; kwargs...) where {T <: CmdStanModels}
   rm_samples = true
   diagnostics = false
     
-  if :n_chains in keys(kwargs) 
-    n_chains = kwargs[:n_chains]
-    set_n_chains(model, n_chains)
-  end
+  :n_chains in keys(kwargs) && set_n_chains(model, kwargs[:n_chains])
   :init in keys(kwargs) && update_R_files(model, kwargs[:init], n_chains, "init")
   :data in keys(kwargs) && update_R_files(model, kwargs[:data], n_chains, "data")
   if :diagnostics in keys(kwargs)

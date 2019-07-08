@@ -1,8 +1,6 @@
 using StanBase
 using Test
 
-import Base.show
-
 stan_prog = "
 data { 
   int<lower=1> N; 
@@ -18,38 +16,24 @@ model {
 }
 ";
 
-struct DummyMethod  <: CmdStanMethods
-  name::AbstractString
-end
-
-function DummyMethod(name="dummy_method") end
-
-tmpdir = joinpath(@__DIR__, "tmp")
-
-struct DummyModel
-  method::CmdStanMethods
-  csm::CmdStanModel
-end
-
-function dummymodel_show(io::IO, m::DummyModel, compact::Bool)
-  println("  method =                  $(m.method)")
-  show(m.csm)
-end
-
-show(io::IO, m::DummyModel) = dummymodel_show(io, m, false)
-
-function dummymodel(name, prog; kwargs...)
- DummyModel(
-   DummyMethod("test"),
-   CmdStanModel(name, prog; kwargs...))
- end
+include("dummy_test.jl")
 
 @testset "Bernoulli basic runs" begin
   
-  global stanmodel = dummymodel("bernoulli_prog", stan_prog; tmpdir=tmpdir)
+  # Just to prevent unnecessary recompilations of  stan_prog
+  tmpdir = joinpath(@__DIR__, "tmp")
+
+  stanmodel = dummy_stan_model("stan_prog", stan_prog; tmpdir=tmpdir)
   show(stanmodel)
 
-  @test stanmodel.method == DummyMethod("test")
+  @test stanmodel.method == DummyStanMethod("dummy_method")
+  @test typeof(stanmodel.csm) == CmdStanModel
+
+  stanmodel = dummy_stan_model("stan_prog", stan_prog;
+    method=DummyStanMethod("method2"))
+  show(stanmodel)
+
+  @test stanmodel.method == DummyStanMethod("method2")
   @test typeof(stanmodel.csm) == CmdStanModel
 
 end

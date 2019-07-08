@@ -60,7 +60,8 @@ function CmdStanModel(
   random = Random(),
   init = Init(),
   output = Output(),
-  tmpdir = mktempdir())
+  tmpdir = mktempdir(),
+  kwargs...)
   
   !isdir(tmpdir) && mkdir(tmpdir)
   

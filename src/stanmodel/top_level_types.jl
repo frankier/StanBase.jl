@@ -37,21 +37,6 @@ abstract type CmdStanMethods end
 
 """
 
-# Cmdlines
-
-### Method
-```julia
-*  SampleCmdline                       : Sampling
-*  OptimizeCmdline                     : Optimization
-*  DiagnoseCmdline                     : Diagnostics
-*  VariationalCmdline                  : Variational Bayes
-*  Generate_QuamtitiesCmdline          : Generate_Quantities
-```
-""" 
-abstract type Cmdlines end
-
-"""
-
 # Random
 
 Random number generator seed value

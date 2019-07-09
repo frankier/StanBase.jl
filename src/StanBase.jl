@@ -24,19 +24,23 @@ using DocStringExtensions: FIELDS, SIGNATURES, TYPEDEF
 import StanRun: stan_sample, stan_cmd_and_paths, default_output_base
 import StanSamples: read_samples
 
+include("stanmodel/shared_fields.jl")
 include("stanmodel/top_level_types.jl")
-include("stanmodel/CmdStanModel.jl")
+include("stanmodel/help_types.jl")
+include("stanmodel/HelpModel.jl")
 include("stanmodel/update_model_file.jl")
 include("stanmodel/number_of_chains.jl")
+include("stanrun/cmdline.jl")
 include("stanrun/stan_sample.jl")
 include("stansamples/stan_summary.jl")
 include("stansamples/read_summary.jl")
 
 export
+  @shared_fields_stancommand,
   CmdStanModels,
-  CmdStanModel,
   CmdStanMethods,
-  Cmdlines,
+  HelpModel,
+  cmdline,
   stan_sample,
   read_summary,
   stan_summary

@@ -61,8 +61,8 @@ stan_summary(
 ```
 """
 function stan_summary(
-  model::CmdStanModel; 
-  printsummary=false)
+  model::T; 
+  printsummary=false) where {T <: CmdStanModels}
   
   local csvfile
   n_chains = get_n_chains(model)

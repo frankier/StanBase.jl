@@ -17,7 +17,7 @@ read_summary(model::CmdStanSampleModel)
 ```
 
 """
-function read_summary(model::CmdStanModel)
+function read_summary(model::T) where {T <: CmdStanModels}
   
   df = DataFrame()
   

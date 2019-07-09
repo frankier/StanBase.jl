@@ -33,6 +33,7 @@ function cmdline(m, id)
     # Sample() specific portion of the model
     cmd = `$cmd $(cmdline(getfield(m, :method), id))`
     
+    #=
     # Common to all models
     cmd = `$cmd $(cmdline(getfield(m, :random), id))`
     
@@ -57,14 +58,12 @@ function cmdline(m, id)
       cmd = `$cmd diagnostic_file=$(string(getfield(m, :output).diagnostic_file))`
     end
     cmd = `$cmd refresh=$(string(getfield(m, :output).refresh))`
+    =#
     
   else
     
     # The 'recursive' part
     cmd = `$cmd $(split(lowercase(string(typeof(m))), '.')[end])`
-    for name in fieldnames(typeof(m))
-      cmd = `$cmd $(name)=$(getfield(m, name))`
-    end
   end
   
   cmd

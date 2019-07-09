@@ -33,13 +33,13 @@ end
 
 function help_model_show(io::IO, m, compact::Bool)
   println("  name =                    \"$(m.name)\"")
+  println("  method =                  $(m.method)")
   println("  n_chains =                $(get_n_chains(m))")
   println("  output =                  Output()")
-  println("    file =                    \"$(m.output.file)\"")
-  println("    diagnostics_file =        \"$(m.output.diagnostic_file)\"")
+  println("    file =                    \"$(split(m.output.file, "/")[end])\"")
+  println("    diagnostics_file =        \"$(split(m.output.diagnostic_file, "/")[end])\"")
   println("    refresh =                 $(m.output.refresh)")
   println("  tmpdir =                  \"$(m.tmpdir)\"")
-  show(io, m.method, compact)
 end
 
 show(io::IO, m::HelpModel) = help_model_show(io, m, false)

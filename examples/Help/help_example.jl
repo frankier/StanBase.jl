@@ -15,8 +15,8 @@ model {
 }
 ";
 
-stanmodel = HelpModel( "help", stan_prog; tmpdir=joinpath(@__DIR__, "tmp"))
+stanmodel = HelpModel( "help", stan_prog;  tmpdir=joinpath(@__DIR__, "tmp"))
 
-stan_sample(stanmodel;n_chains=1)
+stan_help(stanmodel;n_chains=1)
 
 run(`cat $(stanmodel.output_base*"_chain_1.log")`)

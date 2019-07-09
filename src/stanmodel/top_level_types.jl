@@ -22,21 +22,6 @@ abstract type CmdStanModels end
 
 """
 
-# CmdStanMethods
-
-### Method
-```julia
-*  Sample                              : Sampling
-*  Optimize                            : Optimization
-*  Diagnose                            : Diagnostics
-*  Variational                         : Variational Bayes
-*  Generate_Quamtities                 : Generate_Quantities
-```
-""" 
-abstract type CmdStanMethods end
-
-"""
-
 # Random
 
 Random number generator seed value

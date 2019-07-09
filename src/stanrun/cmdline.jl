@@ -22,7 +22,7 @@ cmdline(m)
 function cmdline(m, id)
   
   #=
-  `./bernoulli3 help`,
+  `.../help help`
   =#
   
   cmd = ``

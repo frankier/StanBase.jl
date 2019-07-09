@@ -15,7 +15,7 @@ model {
 }
 ";
 
-stanmodel = HelpModel( "help", stan_prog;  tmpdir=joinpath(@__DIR__, "tmp"))
+stanmodel = HelpModel( "help", stan_prog)
 
 stan_help(stanmodel;n_chains=1)
 

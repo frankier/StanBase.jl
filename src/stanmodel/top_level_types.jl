@@ -22,13 +22,13 @@ abstract type CmdStanModels end
 
 """
 
-# Random
+# RandomSeed
 
 Random number generator seed value
 
 ### Method
 ```julia
-Random(;seed=-1)
+RandomSeed(;seed=-1)
 ```
 ### Optional arguments
 ```julia

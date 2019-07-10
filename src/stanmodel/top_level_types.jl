@@ -35,7 +35,7 @@ Random(;seed=-1)
 * `seed::Int`           : Starting seed value
 ```
 """ 
-struct Random
+mutable struct Random
   seed::Int64
 end
 Random(;seed::Number=-1) = Random(seed)
@@ -55,7 +55,7 @@ Init(;bound=2)
 * `bound::Number`           : Set interval to [-bound, bound]
 ```
 """ 
-struct Init
+mutable struct Init
   bound::Int64
 end
 Init(;bound::Int64=2) = Init(bound)

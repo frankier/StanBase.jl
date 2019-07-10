@@ -12,10 +12,8 @@ module StanBase
 
 using Reexport
 
-@reexport using Unicode, DelimitedFiles, Distributed
-@reexport using StanDump
-@reexport using StanRun
-@reexport using StanSamples
+@reexport using Unicode, DelimitedFiles, Distributed, Random
+@reexport using StanDump, StanRun, StanSamples
 @reexport using MCMCChains
 @reexport using Parameters
 

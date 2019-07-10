@@ -19,7 +19,7 @@ cmdline(m)
 ?CmdStanSampleModel                      : Create a CmdStanSampleModel
 ```
 """
-function cmdline(m, id)
+function cmdline(m::HelpModel, id)
   
   #=
   `.../help help`

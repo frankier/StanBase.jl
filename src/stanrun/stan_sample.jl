@@ -50,7 +50,7 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
     diagnostics = kwargs[:diagnostics]
     setup_diagnostics(model, get_n_chains(model))
   end
-  
+
   _stan_sample(model;  rm_samples = rm_samples)
     
 end

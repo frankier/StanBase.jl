@@ -1,4 +1,5 @@
 import Base.show
+using Random
 
 mutable struct HelpModel <: CmdStanModels	
     @shared_fields_stanmodels
@@ -9,11 +10,11 @@ function HelpModel(
   name::AbstractString,
   model::AbstractString,
   n_chains=[4];
-  random = StanBase.Random(),
-  init = StanBase.Init(),
-  output = StanBase.Output(),
+  seed = RandomSeed(),
+  init = Init(),
+  output = Output(),
   tmpdir = mktempdir(),
-  method = StanBase.Help(),
+  method = Help(),
   kwargs...)
   
   !isdir(tmpdir) && mkdir(tmpdir)
@@ -26,7 +27,7 @@ function HelpModel(
   
   stan_compile(sm)
   
-  HelpModel(name, model, n_chains, random, init, output,
+  HelpModel(name, model, n_chains, seed, init, output,
     tmpdir, output_base, exec_path, String[], String[], 
     Cmd[], String[], String[], String[], false, false, sm, method)
 end

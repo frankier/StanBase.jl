@@ -35,10 +35,10 @@ Random(;seed=-1)
 * `seed::Int`           : Starting seed value
 ```
 """ 
-mutable struct Random
+mutable struct RandomSeed
   seed::Int64
 end
-Random(;seed::Number=-1) = Random(seed)
+RandomSeed(;seed::Number=-1) = RandomSeed(seed)
 
 """
 

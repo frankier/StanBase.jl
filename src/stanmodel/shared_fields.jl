@@ -3,7 +3,7 @@ macro shared_fields_stanmodels()
     name::AbstractString;
     model::AbstractString;
     n_chains::Vector{Int64};
-    random::StanBase.Random;
+    seed::StanBase.RandomSeed;
     init::StanBase.Init;
     output::StanBase.Output;
     tmpdir::AbstractString;

@@ -36,7 +36,7 @@ include("stansamples/stan_summary.jl")
 include("stansamples/read_summary.jl")
 
 export
-  @shared_fields_stancommand,
+  @shared_fields_stanmodels,
   CmdStanModels,
   HelpModel,
   cmdline,

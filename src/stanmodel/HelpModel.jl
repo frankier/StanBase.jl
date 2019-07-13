@@ -3,7 +3,7 @@ using Random
 
 mutable struct HelpModel <: CmdStanModels	
     @shared_fields_stanmodels
-    method::Any
+    method::Help
 end
 
 function HelpModel(

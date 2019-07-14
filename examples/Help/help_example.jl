@@ -15,7 +15,8 @@ model {
 }
 ";
 
-stanmodel = HelpModel( "help", stan_prog)
+stanmodel = HelpModel( "help", stan_prog;
+  method = StanBase.Help(help=:sample))
 
 stan_help(stanmodel;n_chains=1)
 

@@ -31,7 +31,8 @@ function cmdline(m::HelpModel, id)
     cmd = `$(m.exec_path)`
 
     # `help` specific portion of the model
-    cmd = `$cmd $(split(lowercase(string(typeof(m))), '.')[end])`
+    #cmd = `$cmd $(split(lowercase(string(typeof(m))), '.')[end])`
+    cmd = `$cmd $(getfield(m.method, :help)) help`
   end
   
   cmd

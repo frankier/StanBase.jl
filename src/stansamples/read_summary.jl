@@ -68,7 +68,7 @@ function read_summary(model::T) where {T <: CmdStanModels}
   end
 
   for (i, var) in enumerate(cnames)
-    df[Symbol(var)] = mat[i]
+    df[!, Symbol(var)] = mat[i]
   end
   
   ChainDataFrame("CmdStan Summary", df)

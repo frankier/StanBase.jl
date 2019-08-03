@@ -9,6 +9,7 @@
 [![Build Status](https://travis-ci.com/goedman/StanBase.jl.svg?branch=master)](https://travis-ci.com/goedman/StanBase.jl)
 [![codecov.io](http://codecov.io/github/goedman/StanBase.jl/coverage.svg?branch=master)](http://codecov.io/github/goedman/StanBase.jl?branch=master)
 
+
 ## Introduction
 
 This package contains all the common components for several application packages wrapping Stan's `cmdstan` executable. Initial versions of three out of five are available, i.e. StanSample, StanOptimize and StanVariational (for maintenance purposes these will be updated to use this package). Not yet done are StanDiagnose and StanGenerated_Quantities.

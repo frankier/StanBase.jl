@@ -1,4 +1,4 @@
-using DataFrames, MCMCChains, CSV
+using MCMCChains, CSV
 
 """
 
@@ -8,16 +8,16 @@ Read summary output file created by stansummary.
 
 ### Method
 ```julia
-read_summary(m::Stanmodel)
+read_summary(m)
 ```
 
 ### Required arguments
 ```julia
-* `m::Stanmodel`    : Stanmodel object
+* `m`    : A Stan model object, e.g. SampleModel
 ```
 
 """
-function read_summary(m::Stanmodel)
+function read_summary(m::T) where {T <: CmdStanModels}
 
   fname = joinpath(m.tmpdir, "$(m.name)_summary.csv")
   

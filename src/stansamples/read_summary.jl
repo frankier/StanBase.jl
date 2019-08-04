@@ -19,7 +19,8 @@ read_summary(m)
 """
 function read_summary(m::T) where {T <: CmdStanModels}
 
-  fname = m.tmpdir*"/"*m.name*"_summary.csv"
+  fname = "$(m.output_base)_summary.csv"
+  !isdir(fname) && stan_summary(m)
 
   df = CSV.read(fname, delim=",", comment="#")
   

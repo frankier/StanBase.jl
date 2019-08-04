@@ -1,4 +1,4 @@
-using MCMCChains, CSV
+using DataFrames, MCMCChains, CSV
 
 """
 
@@ -19,8 +19,8 @@ read_summary(m)
 """
 function read_summary(m::T) where {T <: CmdStanModels}
 
-  fname = joinpath(m.tmpdir, "$(m.name)_summary.csv")
-  
+  fname = m.tmpdir*"/"*m.name*"_summary.csv"
+
   df = CSV.read(fname, delim=",", comment="#")
   
   cnames = lowercase.(convert.(String, String.(names(df))))

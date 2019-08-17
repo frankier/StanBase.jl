@@ -93,7 +93,7 @@ function update_R_files(model, input, n_chains, fname_part="data")
       stan_dump(model.output_base*"_$(fname_part)_$i.R", input, force=true)
       append!(model_field, [model.output_base*"_$(fname_part)_$i.R"])
     end
-  elseif  typeof(input) <: Vector{Dict{String, Any}}
+  elseif  typeof(input) <: Array{Dict{String, T}, 1} where {T <: Union{Float64, Int64, Array}}
     if length(input) == n_chains
       for (i, d) in enumerate(input)
         stan_dump(model.output_base*"_$(fname_part)_$i.R", d, force=true)

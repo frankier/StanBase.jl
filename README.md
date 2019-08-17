@@ -6,8 +6,8 @@
 ![Lifecycle](https://img.shields.io/badge/lifecycle-retired-orange.svg)
 ![Lifecycle](https://img.shields.io/badge/lifecycle-archived-red.svg)
 ![Lifecycle](https://img.shields.io/badge/lifecycle-dormant-blue.svg) -->
-[![Build Status](https://travis-ci.com/goedman/StanBase.jl.svg?branch=master)](https://travis-ci.com/goedman/StanBase.jl)
-[![codecov.io](http://codecov.io/github/goedman/StanBase.jl/coverage.svg?branch=master)](http://codecov.io/github/goedman/StanBase.jl?branch=master)
+[![Build Status](https://travis-ci.com/StanJulia/StanBase.jl.svg?branch=master)](https://travis-ci.com/StanJulia/StanBase.jl)
+[![codecov.io](http://codecov.io/github/StanJulia/StanBase.jl/coverage.svg?branch=master)](http://codecov.io/github/StanJulia/StanBase.jl?branch=master)
 
 
 ## Introduction

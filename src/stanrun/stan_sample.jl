@@ -113,7 +113,7 @@ function update_R_files(model, input, n_chains, fname_part="data")
       append!(model_field, [model.output_base*"_$(fname_part)_$i.R"])
     end
   else
-    error("\nUnrecognized data or init specified\n")
+    error("\nUnrecognized $(model_field) specified: $(input)\n")
   end
   
 end

@@ -14,7 +14,7 @@
 
 This package contains all the common components for several application packages wrapping Stan's `cmdstan` executable. 
 
-Stan `methods` supported are in StanSample, StanOptimize, StanVariational, StanDiagnose and StanGenerated_Quantities.
+Stan `methods` supported are in StanSample, StanOptimize, StanVariational, StanDiagnose and `generate_quantities` (included in StanSample.jl).
 
 `StanBase.jl`, `HelpModel.jl`, `help_types.jl` and `cmdline.jl` are the templates that have been used in the cmdstan application packages to support cmdstan options such as `stan_sample`, `stan_variational`, etc. 
 

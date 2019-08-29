@@ -20,11 +20,11 @@ StanSample.update_model_file(
 """
 function update_model_file(file::AbstractString, model::AbstractString)
   
-  model1 = parse_and_interpolate(model)
+  model1 = strip(parse_and_interpolate(model))
   model2 = ""
   if isfile(file)
     resfile = open(file, "r")
-    model2 = parse_and_interpolate(read(resfile, String))
+    model2 = strip(parse_and_interpolate(read(resfile, String)))
     model1 != model2 && rm(file)
   end
   if model1 != model2

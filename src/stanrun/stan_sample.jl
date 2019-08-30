@@ -93,7 +93,7 @@ function update_R_files(model, input, n_chains, fname_part="data")
       stan_dump(model.output_base*"_$(fname_part)_$i.R", input, force=true)
       append!(model_field, [model.output_base*"_$(fname_part)_$i.R"])
     end
-  elseif  typeof(input) <: Array{Dict{String, T}, 1} where {T <: Union{Float64, Int64, Array}}
+  elseif  typeof(input) <: Array{Dict{String, Any}, 1}
     if length(input) == n_chains
       for (i, d) in enumerate(input)
         stan_dump(model.output_base*"_$(fname_part)_$i.R", d, force=true)
@@ -113,7 +113,7 @@ function update_R_files(model, input, n_chains, fname_part="data")
       append!(model_field, [model.output_base*"_$(fname_part)_$i.R"])
     end
   else
-    error("\nUnrecognized $(model_field) specified: $(input)\n")
+    error("\nUnrecognized input argument: $(input)\n")
   end
   
 end

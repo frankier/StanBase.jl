@@ -27,9 +27,9 @@ DocStringExtensions = "^0"
 MCMCChains = "^0"
 NamedTupleTools = "^0"
 Parameters = "^0"
-Reexport = "^0"
-StanDump = "^0"
-StanRun = "^0"
+Reexport = "0"
+StanDump = "0"
+StanRun = "0"
 StanSamples = "^0"
 
 [extras]

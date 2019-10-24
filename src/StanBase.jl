@@ -22,6 +22,7 @@ using DocStringExtensions: FIELDS, SIGNATURES, TYPEDEF
 import StanRun: stan_sample, stan_cmd_and_paths, default_output_base
 import StanSamples: read_samples
 
+include("utils/findall.jl")
 include("stanmodel/shared_fields.jl")
 include("stanmodel/top_level_types.jl")
 include("stanmodel/help_types.jl")
@@ -91,6 +92,7 @@ export
   stan_sample,
   read_summary,
   stan_summary,
-  set_cmdstan_home!
+  set_cmdstan_home!,
+  findall
 
 end # module

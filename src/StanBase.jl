@@ -22,7 +22,7 @@ using DocStringExtensions: FIELDS, SIGNATURES, TYPEDEF
 import StanRun: stan_sample, stan_cmd_and_paths, default_output_base
 import StanSamples: read_samples
 
-include("utils/findall.jl")
+Int64(VERSION.minor) < 3 && include("utils/findall.jl")
 include("stanmodel/shared_fields.jl")
 include("stanmodel/top_level_types.jl")
 include("stanmodel/help_types.jl")

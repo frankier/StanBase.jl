@@ -28,7 +28,7 @@ function read_summary(m::T) where {T <: CmdStanModels}
   cnames[1] = "parameters"
   cnames[4] = "std"
   cnames[8] = "ess"
-  names!(df, Symbol.(cnames))
+  rename!(df, Symbol.(cnames), makeunique=true)
   df[!, :parameters] = Symbol.(df[!, :parameters])
   
   ChainDataFrame("CmdStan Summary", df)

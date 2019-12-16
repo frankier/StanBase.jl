@@ -1,7 +1,7 @@
 name = "StanBase"
 uuid = "d0ee94f6-a23d-54aa-bbe9-7f572d6da7f5"
 authors = ["Rob J Goedman <goedman@mac.com>"]
-version = "1.1.2"
+version = "1.1.3"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -23,7 +23,7 @@ Unicode = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 CSV = "0.5"
 DataFrames = "0.19, 0.20"
 DocStringExtensions = "0.8"
-MCMCChains = "0.4"
+MCMCChains = "1.0"
 NamedTupleTools = "0.11, 0.12"
 Parameters = "0.12"
 Reexport = "0.2"

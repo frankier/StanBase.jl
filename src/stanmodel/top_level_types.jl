@@ -8,14 +8,10 @@ Base model specialized in:
 
 ### Method
 ```julia
-*  SampleModel                         : StanSample.jl
-*  OptimizeModel                       : StanOptimize.jl
-*  VariationalModel                     : StanVariational.jl
-
-Not yet done:
-
-*  DiagnoseModel                       : StanDiagnose.jl
-*  Generate_QuamtitiesModel            : StanGenerate_Quantities.jl
+*  SampleModel                  : StanSample.jl
+*  OptimizeModel                : StanOptimize.jl
+*  VariationalModel             : StanVariational.jl
+*  DiagnoseModel                : StanDiagnose.jl
 ```
 """ 
 abstract type CmdStanModels end

@@ -21,9 +21,15 @@ model {
   
   stanmodel = HelpModel( "help", stan_prog)
 
-  stan_sample(stanmodel; n_chains=1)
+  res = stan_sample(stanmodel; n_chains=1)
 
-  @test stanmodel.method == StanBase.Help(:help)
-  @test StanBase.get_n_chains(stanmodel) == 1
+  if !isnothing(res[1][2])
+
+    run(`cat $(res[1][2])`)
+    
+    @test stanmodel.method == StanBase.Help(:help)
+    @test StanBase.get_n_chains(stanmodel) == 1
+
+  end
 
 end

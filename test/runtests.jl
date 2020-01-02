@@ -23,7 +23,7 @@ model {
 
   res = stan_sample(stanmodel; n_chains=1)
 
-  if !isnothing(res[1][2])
+  if !isnothing(res)
 
     run(`cat $(res[1][2])`)
     

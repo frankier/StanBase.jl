@@ -16,8 +16,13 @@ model {
 ";
 
 stanmodel = HelpModel( "help", stan_prog;
-  method = StanBase.Help(help=:sample))
+  method = StanBase.Help(help=:sample),
+  tmpdir = joinpath(@__DIR__, "/tmp"))
 
-stan_help(stanmodel;n_chains=1)
+res = stan_help(stanmodel;n_chains=1)
 
-run(`cat $(stanmodel.output_base*"_chain_1.log")`)
+if !isnothing(res)
+
+run(`cat $(res[1][2])`)
+
+end

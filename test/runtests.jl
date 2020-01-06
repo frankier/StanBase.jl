@@ -23,14 +23,12 @@ model {
   println("Model compilation completed.")
 
   res = stan_sample(stanmodel; n_chains=1)
+  println("Sampling completed.")
 
   if !isnothing(res[1])
-
     run(`cat $(res[1][2])`)
-    
     @test stanmodel.method == StanBase.Help(:help)
     @test StanBase.get_n_chains(stanmodel) == 1
-
   end
 
 end

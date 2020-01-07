@@ -17,6 +17,7 @@ macro shared_fields_stanmodels()
     diagnostic_file::Vector{String};
     summary::Bool;
     printsummary::Bool;
-    sm::StanRun.StanModel;
+    cmdstan_home::AbstractString;
+    #sm::StanRun.StanModel;
   ))
 end

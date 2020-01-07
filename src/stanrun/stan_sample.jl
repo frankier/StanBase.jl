@@ -57,9 +57,10 @@ end
 
 function _stan_sample(model::T; rm_samples = true) where {T <: CmdStanModels}
   
-    rm_samples && rm.(StanRun.find_samples(model.sm))
+    #rm_samples && rm.(StanRun.find_samples(model.sm))
     cmds_and_paths = [stan_cmd_and_paths(model, id)
                       for id in 1:get_n_chains(model)]
+    println("\n$(cmds_and_paths)\n")
     pmap(cmds_and_paths) do cmd_and_path
         cmd, (sample_path, log_path) = cmd_and_path
         success(cmd) ? sample_path : nothing, log_path

@@ -10,16 +10,18 @@ be used to sample from it.
 """
 module StanBase
 
-using Reexport
+#using Reexport
 
-using StanDump, StanRun, StanSamples
-@reexport using Unicode, DelimitedFiles, Distributed
-@reexport using MCMCChains
-@reexport using Parameters
+using StanDump, StanSamples
+using StanRun: executable_path, ensure_executable, get_cmdstan_home
+
+using Unicode, DelimitedFiles, Distributed
+using MCMCChains
+using Parameters
 
 using DocStringExtensions: FIELDS, SIGNATURES, TYPEDEF
 
-import StanRun: stan_sample, stan_cmd_and_paths, default_output_base
+#import StanRun: stan_sample, stan_cmd_and_paths, default_output_base
 import StanSamples: read_samples
 
 Int64(VERSION.minor) < 3 && include("utils/findall.jl")

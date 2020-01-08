@@ -22,25 +22,29 @@ function HelpModel(
   
   StanBase.update_model_file(joinpath(tmpdir, "$(name).stan"), strip(model))
   
-  output_base = tmpdir
-  exec_path = joinpath(tmpdir, name)
-  
-  #stan_compile(sm)
+  output_base = joinpath(tmpdir, name)
+  exec_path = output_base
+  cmdstan_home = get_cmdstan_home()
+
+  error_output = IOBuffer()
+  is_ok = cd(cmdstan_home) do
+      success(pipeline(`make -f $(cmdstan_home)/makefile -C $(cmdstan_home) $(exec_path)`;
+                       stderr = error_output))
+  end
+  if !is_ok
+      throw(StanModelError(model, String(take!(error_output))))
+  end
   
   HelpModel(name, model, n_chains, seed, init, output,
     tmpdir, tmpdir, exec_path, String[], String[], 
     Cmd[], String[], String[], String[], false, false,
-    get_cmdstan_home(), method)
+    cmdstan_home, method)
 end
 
 function help_model_show(io::IO, m, compact::Bool)
   println(io, "  name =                    \"$(m.name)\"")
   println(io, "  method =                  $(m.method)")
   println(io, "  n_chains =                $(get_n_chains(m))")
-  println(io, "  output =                  Output()")
-  println(io, "    file =                    \"$(split(m.output.file, "/")[end])\"")
-  println(io, "    diagnostics_file =        \"$(split(m.output.diagnostic_file, "/")[end])\"")
-  println(io, "    refresh =                 $(m.output.refresh)")
   println(io, "  tmpdir =                  \"$(m.tmpdir)\"")
 end
 

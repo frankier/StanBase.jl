@@ -4,16 +4,37 @@ init_union = Union{Nothing, StanBase.Init, AbstractString, Dict, Array{T, 1} whe
 """
 $(SIGNATURES)
 
-Default `output_base` data files, in the same directory as the model. Internal, not exported.
+Default `output_base` data files, in tmpdir. Internal, not exported.
 """
 data_file_path(output_base::AbstractString, id::Int) = output_base * "_data_$(id).R"
 
 """
 $(SIGNATURES)
 
-Default `output_base` init files, in the same directory as the model. Internal, not exported.
+Default `output_base` init files, in tmpdir. Internal, not exported.
 """
 init_file_path(output_base::AbstractString, id::Int) = output_base * "_init_$(id).R"
+
+"""
+$(SIGNATURES)
+
+Default `output_base` chain files, in tmpdir. Internal, not exported.
+"""
+sample_file_path(output_base::AbstractString, id::Int) = output_base * "_chain_$(id).R"
+
+"""
+$(SIGNATURES)
+
+Default `output_base` log files, in tmpdir. Internal, not exported.
+"""
+log_file_path(output_base::AbstractString, id::Int) = output_base * "_log_$(id).R"
+
+"""
+$(SIGNATURES)
+
+Default `output_base` diagnostic files, in tmpdir. Internal, not exported.
+"""
+diagnostic_file_path(output_base::AbstractString, id::Int) = output_base * "_diagnostic_$(id).R"
 
 """
 $(SIGNATURES)
@@ -51,23 +72,15 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
     setup_diagnostics(model, get_n_chains(model))
   end
 
-  _stan_sample(model;  rm_samples = rm_samples)
-    
-end
-
-function _stan_sample(model::T; rm_samples = true) where {T <: CmdStanModels}
-  
-    rm_samples && rm.(StanRun.find_samples(model.sm))
-    run(`ls -lia $(model.tmpdir)`)
-    cmds_and_paths = [stan_cmd_and_paths(model, id)
-                      for id in 1:get_n_chains(model)]
-    println("\n$(cmds_and_paths[1])\n")
-    run(`ls -lia $(model.tmpdir)`)
-    pmap(cmds_and_paths) do cmd_and_path
-        cmd, (sample_path, log_path) = cmd_and_path
-        success(cmd) ? sample_path : nothing, log_path
-    end
-    run(`ls -lia $(model.tmpdir)`)
+  run(`ls -lia $(model.tmpdir)`)
+  cmds_and_paths = [stan_cmd_and_paths(model, id)
+                    for id in 1:get_n_chains(model)]
+  println("\n$(cmds_and_paths[1])\n")
+  run(`ls -lia $(model.tmpdir)`)
+  pmap(cmds_and_paths) do cmd_and_path
+      cmd, (sample_path, log_path) = cmd_and_path
+      success(cmd) ? sample_path : nothing, log_path
+  end
     
 end
 
@@ -78,12 +91,11 @@ Run a Stan command. Internal, not exported.
 """
 function stan_cmd_and_paths(model::T, id::Integer) where {T <: CmdStanModels}
   
-    append!(model.sample_file, [StanRun.sample_file_path(model.output_base, id)])
-    model.output.file = model.sample_file[id]
+    append!(model.sample_file, [sample_file_path(model.output_base, id)])
+    append!(model.log_file, [log_file_path(model.output_base, id)])
     if length(model.diagnostic_file) > 0
-      model.output.diagnostic_file = model.diagnostic_file[id]
+      append!(model.diagnostic_file, [diagnostic_file_path(model.output_base, id)])
     end
-    append!(model.log_file, [StanRun.log_file_path(model.output_base, id)])
     append!(model.cmds, [cmdline(model, id)])
     pipeline(model.cmds[id]; stdout=model.log_file[id]), (model.sample_file[id], model.log_file[id])
     

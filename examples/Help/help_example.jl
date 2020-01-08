@@ -18,7 +18,7 @@ model {
 ";
 
 sm = HelpModel( "help", stan_prog;
-  method = StanBase.Help(help=:sample),
+  method = StanBase.Help(:sample),
   tmpdir = joinpath(ProjDir, "tmp"))
 
 res = stan_help(sm; n_chains=1)

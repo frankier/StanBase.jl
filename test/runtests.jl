@@ -17,7 +17,7 @@ model {
 ";
 
 
-@testset "Basic HelpModel" begin
+#@testset "Basic HelpModel" begin
   
   stanmodel = HelpModel( "help", stan_prog)
   println("\nModel compilation completed.")
@@ -27,8 +27,8 @@ model {
 
   if !isnothing(res[1])
     run(`cat $(res[1][2])`)
-    @test stanmodel.method == StanBase.Help(:help)
+    @test stanmodel.method == StanBase.Help(:sample)
     @test StanBase.get_n_chains(stanmodel) == 1
   end
 
-end
+#end

@@ -15,7 +15,7 @@ function HelpModel(
   init = Init(),
   output = Output(),
   tmpdir = mktempdir(),
-  method = Help(),
+  method = Help(:sample),
   kwargs...)
   
   !isdir(tmpdir) && mkdir(tmpdir)

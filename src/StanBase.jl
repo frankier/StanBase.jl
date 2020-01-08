@@ -10,25 +10,23 @@ be used to sample from it.
 """
 module StanBase
 
-using Reexport
-
-using StanDump, StanRun, StanSamples
-@reexport using Unicode, DelimitedFiles, Distributed
-@reexport using MCMCChains
-@reexport using Parameters
-
 using DocStringExtensions: FIELDS, SIGNATURES, TYPEDEF
+using Unicode, DelimitedFiles, Distributed
+using MCMCChains
+using Parameters
 
-import StanRun: stan_sample, stan_cmd_and_paths, default_output_base
+using StanDump, StanSamples
 import StanSamples: read_samples
 
 Int64(VERSION.minor) < 3 && include("utils/findall.jl")
+include("stanmodel/cmdstan_home.jl")
 include("stanmodel/shared_fields.jl")
 include("stanmodel/top_level_types.jl")
 include("stanmodel/help_types.jl")
 include("stanmodel/HelpModel.jl")
 include("stanmodel/update_model_file.jl")
 include("stanmodel/number_of_chains.jl")
+include("stanrun/executable.jl")
 include("stanrun/cmdline.jl")
 include("stanrun/stan_sample.jl")
 include("stansamples/stan_summary.jl")

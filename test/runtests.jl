@@ -20,10 +20,10 @@ model {
 @testset "Basic HelpModel" begin
   
   stanmodel = HelpModel( "help", stan_prog)
-  println("Model compilation completed.")
+  println("\nModel compilation completed.")
 
   res = stan_sample(stanmodel; n_chains=1)
-  println("Sampling completed.")
+  println("Sampling completed.\n")
 
   if !isnothing(res[1])
     run(`cat $(res[1][2])`)

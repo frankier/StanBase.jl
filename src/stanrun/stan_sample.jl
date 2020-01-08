@@ -61,6 +61,8 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
   rm_samples = true
   diagnostics = false
     
+  println("\nstan_sample: $(model.output_base)\n")
+
   if :n_chains in keys(kwargs) 
     n_chains = kwargs[:n_chains]
     set_n_chains(model, n_chains)
@@ -91,7 +93,7 @@ $(SIGNATURES)
 Run a Stan command. Internal, not exported.
 """
 function stan_cmd_and_paths(model::T, id::Integer) where {T <: CmdStanModels}
-  
+    println("\nstan_cmd_paths: $(model.output_base)\n")
     append!(model.sample_file, [sample_file_path(model.output_base, id)])
     append!(model.log_file, [log_file_path(model.output_base, id)])
     if length(model.diagnostic_file) > 0

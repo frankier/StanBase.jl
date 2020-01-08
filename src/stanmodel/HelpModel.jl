@@ -36,7 +36,7 @@ function HelpModel(
   end
   
   HelpModel(name, model, n_chains, seed, init, output,
-    tmpdir, tmpdir, exec_path, String[], String[], 
+    tmpdir, output_base, exec_path, String[], String[], 
     Cmd[], String[], String[], String[], false, false,
     cmdstan_home, method)
 end

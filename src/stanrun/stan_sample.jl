@@ -51,13 +51,6 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
     setup_diagnostics(model, get_n_chains(model))
   end
 
-  _stan_sample(model;  rm_samples = rm_samples)
-    
-end
-
-function _stan_sample(model::T; rm_samples = true) where {T <: CmdStanModels}
-  
-    #rm_samples && rm.(StanRun.find_samples(model.sm))
     cmds_and_paths = [stan_cmd_and_paths(model, id)
                       for id in 1:get_n_chains(model)]
     println("\n$(cmds_and_paths)\n")

@@ -1,6 +1,6 @@
 import Base.show
 using Random
-using StanRun
+#using StanRun
 
 mutable struct HelpModel <: CmdStanModels	
     @shared_fields_stanmodels
@@ -21,12 +21,11 @@ function HelpModel(
   !isdir(tmpdir) && mkdir(tmpdir)
   
   StanBase.update_model_file(joinpath(tmpdir, "$(name).stan"), strip(model))
-  sm = StanModel(joinpath(tmpdir, "$(name).stan"))
   
   output_base = tmpdir
-  exec_path = ensure_executable(sm)
+  exec_path = joinpath(tmpdir, name)
   
-  stan_compile(sm)
+  #stan_compile(sm)
   
   HelpModel(name, model, n_chains, seed, init, output,
     tmpdir, tmpdir, exec_path, String[], String[], 

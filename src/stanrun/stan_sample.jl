@@ -72,6 +72,7 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
     setup_diagnostics(model, get_n_chains(model))
   end
 
+  println()
   run(`ls -lia $(model.tmpdir)`)
   cmds_and_paths = [stan_cmd_and_paths(model, id)
                     for id in 1:get_n_chains(model)]
@@ -97,6 +98,7 @@ function stan_cmd_and_paths(model::T, id::Integer) where {T <: CmdStanModels}
       append!(model.diagnostic_file, [diagnostic_file_path(model.output_base, id)])
     end
     append!(model.cmds, [cmdline(model, id)])
+    println("\n$(cmdline(model, id))\n")
     pipeline(model.cmds[id]; stdout=model.log_file[id]), (model.sample_file[id], model.log_file[id])
     
 end

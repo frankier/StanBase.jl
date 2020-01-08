@@ -60,6 +60,7 @@ function _stan_sample(model::T; rm_samples = true) where {T <: CmdStanModels}
     rm_samples && rm.(StanRun.find_samples(model.sm))
     cmds_and_paths = [stan_cmd_and_paths(model, id)
                       for id in 1:get_n_chains(model)]
+    println("\n$(cmds_and_paths[1])\n")
     pmap(cmds_and_paths) do cmd_and_path
         cmd, (sample_path, log_path) = cmd_and_path
         success(cmd) ? sample_path : nothing, log_path
@@ -81,6 +82,7 @@ function stan_cmd_and_paths(model::T, id::Integer) where {T <: CmdStanModels}
     end
     append!(model.log_file, [StanRun.log_file_path(model.output_base, id)])
     append!(model.cmds, [cmdline(model, id)])
+    println("\n$(cmdline(model, id))\n")
     pipeline(model.cmds[id]; stdout=model.log_file[id]), (model.sample_file[id], model.log_file[id])
     
 end

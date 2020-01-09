@@ -17,30 +17,38 @@ model {
 ";
 
 
-#@testset "Basic HelpModel" begin
+@testset "Basic HelpModel" begin
   
-  stanmodel = HelpModel( "help", stan_prog)
-  println("\nModel compilation completed.")
+  debug = true
 
-  println("\nRun command:\n")
-  res = run(`$(stanmodel.output_base) sample help`)
-  println(res)
+  sm = HelpModel( "help", stan_prog)
+  debug && println("\nModel compilation completed.")
 
-  println("\nPipeline version:\n")
-  run(pipeline(`$(stanmodel.output_base) sample help`, 
-    stdout="$(stanmodel.output_base)_log_2.log", append=false))
-  println()
-  run(`ls -lia $(stanmodel.tmpdir)`)
-  println()
+  if debug
 
-  println("\nstan_sample:\n")
-  res = stan_sample(stanmodel; n_chains=1)
-  println("Sampling completed.\n")
+    println("\nRun command:\n")
+    res = run(`$(sm.output_base) sample help`)
+    println(res)
 
-  if !isnothing(res[1])
-    run(`cat $(res[1][2])`)
-    @test stanmodel.method == StanBase.Help(:sample)
-    @test StanBase.get_n_chains(stanmodel) == 1
+    println("\nPipeline version:\n")
+    res = run(pipeline(`$(sm.output_base) sample help`, 
+      stdout="$(sm.output_base)_log_2.log", append=false))
+    println()
+    run(`ls -lia $(sm.tmpdir)`)
+    println()
+    
   end
 
-#end
+    debug && println("\nstan_sample:\n")
+    res = stan_sample(sm; n_chains=1, debug=debug)
+    debug && println("Sampling completed.\n")
+
+  if !isnothing(res[1])
+    debug && run(`ls -lia $(sm.tmpdir)`)
+    println()
+    run(`cat $(res[1][2])`)
+    @test sm.method == StanBase.Help(:sample)
+    @test StanBase.get_n_chains(sm) == 1
+  end
+
+end

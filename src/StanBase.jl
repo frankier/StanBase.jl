@@ -31,6 +31,7 @@ include("stanrun/cmdline.jl")
 include("stanrun/stan_sample.jl")
 include("stansamples/stan_summary.jl")
 include("stansamples/read_summary.jl")
+include("utils/par.jl")
 
 """
 The directory which contains the cmdstan executables such as `bin/stanc` and

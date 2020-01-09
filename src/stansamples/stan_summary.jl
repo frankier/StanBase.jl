@@ -1,11 +1,3 @@
-function par(cmd::Vector{String})
-  res = `$(cmd[1])`
-  for i in 2:length(cmd)
-    res = `$(res) $(cmd[i])`
-  end
-  res
-end
-
 """
 
 # Method stan_summary

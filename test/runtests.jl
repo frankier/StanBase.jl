@@ -17,7 +17,7 @@ model {
 ";
 
 
-@testset "Basic HelpModel" begin
+#@testset "Basic HelpModel" begin
   
   debug = true
 
@@ -41,15 +41,15 @@ model {
   end
 
     debug && println("\nstan_sample:\n")
-    res = stan_sample(sm; n_chains=1, debug=debug)
+    return_codes = stan_sample(sm; n_chains=1, debug=debug)
     debug && println("Sampling completed.\n")
 
-  if !isnothing(res[1])
+  if return_codes[1]
     debug && run(`ls -lia $(sm.tmpdir)`)
     println()
-    run(`cat $(res[1][2])`)
+    run(`cat $(sm.log_file[1])`)
     @test sm.method == StanBase.Help(:sample)
     @test StanBase.get_n_chains(sm) == 1
   end
 
-end
+#end

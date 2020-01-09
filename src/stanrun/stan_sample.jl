@@ -82,6 +82,24 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
                     for id in 1:get_n_chains(model)]
   verbose && println("\n$(cmds_and_paths)\n")
   verbose && run(`ls -lia $(model.tmpdir)`)
+
+  #pmap(f, [::AbstractWorkerPool], c...; distributed=true, 
+  # batch_size=1, on_error=nothing, retry_delays=[],
+  # retry_check=nothing) -> collection
+
+  cmds = Vector{Base.CmdRedirect}()
+  return_codes = Array{Bool,1}()
+  for thiscmd in cmds_and_paths
+    #verbose && println(thiscmd)
+    cmd, (sample_path, log_path) = thiscmd
+    #verbose && println(cmd)
+    append!(cmds, [cmd])
+  end
+  append!(return_codes, success(pmap(run, cmds)))
+  verbose && println(return_codes)
+  return_codes
+
+  #=
   pmap(cmds_and_paths) do cmd_and_path
       cmd, (sample_path, log_path) = cmd_and_path
       verbose && println("\n$(cmd)\n")
@@ -89,6 +107,7 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
       verbose && println("\n$(res)\n")
       success(res) ? sample_path : nothing, log_path
   end
+  =#
     
 end
 

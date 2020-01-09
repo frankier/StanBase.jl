@@ -86,6 +86,7 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
       cmd, (sample_path, log_path) = cmd_and_path
       verbose && println("\n$(cmd)\n")
       res = run(cmd)
+      verbose && println("\n$(res)\n")
       success(res) ? sample_path : nothing, log_path
   end
     

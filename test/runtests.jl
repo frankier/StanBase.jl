@@ -41,15 +41,15 @@ model {
   end
 
     debug && println("\nstan_sample:\n")
-    return_codes = stan_sample(sm; n_chains=1, debug=debug)
+    return_codes = stan_sample(sm; n_chains=4, debug=debug)
     debug && println("Sampling completed.\n")
 
-  if return_codes[1]
+  if success(return_codes)
     debug && run(`ls -lia $(sm.tmpdir)`)
     println()
     run(`cat $(sm.log_file[1])`)
     @test sm.method == StanBase.Help(:sample)
-    @test StanBase.get_n_chains(sm) == 1
+    @test StanBase.get_n_chains(sm) == 4
   end
 
 #end

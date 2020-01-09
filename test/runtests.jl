@@ -22,9 +22,11 @@ model {
   stanmodel = HelpModel( "help", stan_prog)
   println("\nModel compilation completed.")
 
+  println("\nRun command:\n")
   res = run(`$(stanmodel.output_base) sample help`)
   println(res)
 
+  println("\nPipeline version:\n")
   res = stan_sample(stanmodel; n_chains=1)
   println("Sampling completed.\n")
 

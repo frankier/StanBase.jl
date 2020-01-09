@@ -20,21 +20,21 @@ $(SIGNATURES)
 
 Default `output_base` chain files, in tmpdir. Internal, not exported.
 """
-sample_file_path(output_base::AbstractString, id::Int) = output_base * "_chain_$(id).R"
+sample_file_path(output_base::AbstractString, id::Int) = output_base * "_chain_$(id).csv"
 
 """
 $(SIGNATURES)
 
 Default `output_base` log files, in tmpdir. Internal, not exported.
 """
-log_file_path(output_base::AbstractString, id::Int) = output_base * "_log_$(id).R"
+log_file_path(output_base::AbstractString, id::Int) = output_base * "_log_$(id).log"
 
 """
 $(SIGNATURES)
 
 Default `output_base` diagnostic files, in tmpdir. Internal, not exported.
 """
-diagnostic_file_path(output_base::AbstractString, id::Int) = output_base * "_diagnostic_$(id).R"
+diagnostic_file_path(output_base::AbstractString, id::Int) = output_base * "_diagnostic_$(id).csv"
 
 """
 $(SIGNATURES)

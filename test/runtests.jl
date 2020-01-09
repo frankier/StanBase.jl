@@ -17,7 +17,7 @@ model {
 ";
 
 
-@testset "Basic HelpModel" begin
+#@testset "Basic HelpModel" begin
   
   stanmodel = HelpModel( "help", stan_prog)
   println("\nModel compilation completed.")
@@ -27,6 +27,13 @@ model {
   println(res)
 
   println("\nPipeline version:\n")
+  run(pipeline(`$(stanmodel.output_base) sample help`, 
+    stdout="$(stanmodel.output_base)_log_2.log", append=false))
+  println()
+  run(`ls -lia $(stanmodel.tmpdir)`)
+  println()
+
+  println("\nstan_sample:\n")
   res = stan_sample(stanmodel; n_chains=1)
   println("Sampling completed.\n")
 
@@ -36,4 +43,4 @@ model {
     @test StanBase.get_n_chains(stanmodel) == 1
   end
 
-end
+#end

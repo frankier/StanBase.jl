@@ -20,8 +20,8 @@ model {
 sm = HelpModel( "bernoulli", bernoulli;
   method = StanBase.Help(:sample))
 
-rc = stan_help(sm; n_chains=1)
+rc = stan_help(sm; n_chains=9)
 
-if rc[1]
+if success(rc)
 	run(`cat $(sm.log_file[1])`)
 end

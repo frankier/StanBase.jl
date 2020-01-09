@@ -23,6 +23,7 @@ model {
 
   sm = HelpModel( "help", stan_prog)
   debug && println("\nModel compilation completed.")
+  debug && run(`ls -lia $(sm.tmpdir)`)
 
   if debug
 

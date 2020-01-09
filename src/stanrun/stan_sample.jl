@@ -80,10 +80,11 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
   verbose && run(`ls -lia $(model.tmpdir)`)
   cmds_and_paths = [stan_cmd_and_paths(model, id; kwargs...)
                     for id in 1:get_n_chains(model)]
-  verbose && println("\n$(cmds_and_paths[1])\n")
+  verbose && println("\n$(cmds_and_paths)\n")
   verbose && run(`ls -lia $(model.tmpdir)`)
   pmap(cmds_and_paths) do cmd_and_path
       cmd, (sample_path, log_path) = cmd_and_path
+      verbose && println("\n$(cmd)\n")
       res = run(cmd)
       success(res) ? sample_path : nothing, log_path
   end

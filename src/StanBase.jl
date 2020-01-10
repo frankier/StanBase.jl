@@ -1,12 +1,6 @@
 """
 Helper infrastructure to compile and sample models using `cmdstan`.
 
-[`StanModel`](@ref) wraps a model definition (source code), while [`stan_sample`](@ref) can
-be used to sample from it.
-
-[`stan_compile`](@ref) can be used to pre-compile a model without sampling. A
-[`StanModelError`](@ref) is thrown if this fails, which contains the error messages from
-`stanc`.
 """
 module StanBase
 
@@ -15,8 +9,7 @@ using Unicode, DelimitedFiles, Distributed
 using MCMCChains
 using Parameters
 
-using StanDump, StanSamples
-import StanSamples: read_samples
+using StanDump
 
 Int64(VERSION.minor) < 3 && include("utils/findall.jl")
 include("stanmodel/cmdstan_home.jl")
@@ -33,53 +26,6 @@ include("stansamples/stan_summary.jl")
 include("stansamples/read_summary.jl")
 include("utils/par.jl")
 
-"""
-The directory which contains the cmdstan executables such as `bin/stanc` and
-`bin/stansummary`. Inferred from the environment variable `JULIA_CMDSTAN_HOME` or `ENV["JULIA_CMDSTAN_HOME"]`
-when available.
-
-If these are not available, use `set_cmdstan_home!` to set the value of CMDSTAN_HOME.
-
-Example: `set_cmdstan_home!(homedir() * "/Projects/Stan/cmdstan/")`
-
-Executing `versioninfo()` will display the value of `JULIA_CMDSTAN_HOME` if defined.
-"""
-CMDSTAN_HOME=""
-
-function __init__()
-  global CMDSTAN_HOME = if isdefined(Main, :JULIA_CMDSTAN_HOME)
-    Main.JULIA_CMDSTAN_HOME
-  elseif haskey(ENV, "JULIA_CMDSTAN_HOME")
-    ENV["JULIA_CMDSTAN_HOME"]
-  elseif haskey(ENV, "CMDSTAN_HOME")
-    ENV["CMDSTAN_HOME"]
-  else
-    @warn("Environment variable CMDSTAN_HOME not set. Use set_cmdstan_home!.")
-    ""
-  end
-end
-
-"""Set the path for the `CMDSTAN_HOME` environment variable.
-
-Example: `set_cmdstan_home!(homedir() * "/Projects/Stan/cmdstan/")`
-"""
-set_cmdstan_home!(path) = global CMDSTAN_HOME = path
-
-const src_path = @__DIR__
-
-"""
-# `rel_path_stanbase`
-
-Relative path using the StanBase.jl src directory. This approach has been copied from
-[DynamicHMCExamples.jl](https://github.com/tpapp/DynamicHMCExamples.jl)
-
-### Example to get access to the data subdirectory
-```julia
-rel_path_stanbase("..", "data")
-```
-"""
-rel_path_stanbase(parts...) = normpath(joinpath(src_path, parts...))
-
 stan_help = stan_sample
 
 export
@@ -91,7 +37,7 @@ export
   stan_sample,
   read_summary,
   stan_summary,
-  set_cmdstan_home!,
+  set_cmdstan_home,
   findall
 
 end # module

@@ -22,7 +22,7 @@ cmdline(m)
 function cmdline(m::HelpModel, id)
   
   #=
-  `.../help help`
+  `executable_path sample help`
   =#
   
   cmd = ``

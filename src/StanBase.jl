@@ -49,11 +49,6 @@ function __init__()
   end
 end
 
-"""Set the path for the `CMDSTAN_HOME` environment variable.
-Example: `set_cmdstan_home!(homedir() * "/Projects/Stan/cmdstan/")`
-"""
-set_cmdstan_home!(path) = global CMDSTAN_HOME = path
-
 stan_help = stan_sample
 
 export

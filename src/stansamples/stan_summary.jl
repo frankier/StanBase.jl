@@ -1,30 +1,11 @@
 """
 
-# Method stan_summary
+$(SIGNATURES)
 
-Display cmdstan summary 
-
-### Method
-```julia
-stan_summary(
-  model::SampleModel,
-  CmdStanDir=CMDSTAN_HOME
-)
-```
 ### Required arguments
 ```julia
 * `model::SampleModel             : Stanmodel
 * `file::String`                : Name of file with samples
-```
-
-### Optional arguments
-```julia
-* CmdStanDir=CMDSTAN_HOME       : cmdstan directory for stansummary program
-```
-
-### Related help
-```julia
-?Stan.stan                      : Execute a StanModel
 ```
 """
 function stan_summary(

@@ -7,13 +7,13 @@ Display cmdstan summary
 ### Method
 ```julia
 stan_summary(
-  model::StanModel,
+  model::SampleModel,
   CmdStanDir=CMDSTAN_HOME
 )
 ```
 ### Required arguments
 ```julia
-* `model::Stanmodel             : Stanmodel
+* `model::SampleModel             : Stanmodel
 * `file::String`                : Name of file with samples
 ```
 
@@ -39,7 +39,7 @@ function stan_summary(
     push!(samplefiles, "$(model.output_base)_chain_$(i).csv")
   end
   try
-    pstring = joinpath("$(model.sm.cmdstan_home)", "bin", "stansummary")
+    pstring = joinpath("$(model.cmdstan_home)", "bin", "stansummary")
     csvfile = "$(model.output_base)_summary.csv"
     isfile(csvfile) && rm(csvfile)
     cmd = `$(pstring) --csv_file=$(csvfile) $(par(samplefiles))`
@@ -52,7 +52,6 @@ function stan_summary(
   catch e
     println(e)
   end
-  #sleep(1) # ???? Almost seems run(cmd) is not waiting for completion
   
   return
   

@@ -64,20 +64,15 @@ Default settings for output portion in cmdstan command
 
 ### Method
 ```julia
-Output(;file="", diagnostics_file="", refresh=100)
+Output(;refresh=100)
 ```
 ### Optional arguments
 ```julia
-* `fikle::AbstractString`              : File used to store draws
-* `diagnostics_fikle::AbstractString`  : File used to store diagnostics
 * `refresh::Int64`                     : Output refresh rate
 ```
 """ 
 mutable struct Output
-  file::String
-  diagnostic_file::String
   refresh::Int64
 end
-Output(;file="", diagnostic_file="", refresh=100) =
-  Output(file, diagnostic_file, refresh)
+Output(;refresh=100) = Output(refresh)
 

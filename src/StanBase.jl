@@ -26,6 +26,34 @@ include("stansamples/stan_summary.jl")
 include("stansamples/read_summary.jl")
 include("utils/par.jl")
 
+"""
+The directory which contains the cmdstan executables such as `bin/stanc` and
+`bin/stansummary`. Inferred from the environment variable `JULIA_CMDSTAN_HOME` or `ENV["JULIA_CMDSTAN_HOME"]`
+when available.
+If these are not available, use `set_cmdstan_home!` to set the value of CMDSTAN_HOME.
+Example: `set_cmdstan_home!(homedir() * "/Projects/Stan/cmdstan/")`
+Executing `versioninfo()` will display the value of `JULIA_CMDSTAN_HOME` if defined.
+"""
+CMDSTAN_HOME=""
+
+function __init__()
+  global CMDSTAN_HOME = if isdefined(Main, :JULIA_CMDSTAN_HOME)
+    Main.JULIA_CMDSTAN_HOME
+  elseif haskey(ENV, "JULIA_CMDSTAN_HOME")
+    ENV["JULIA_CMDSTAN_HOME"]
+  elseif haskey(ENV, "CMDSTAN_HOME")
+    ENV["CMDSTAN_HOME"]
+  else
+    @warn("Environment variable CMDSTAN_HOME not set. Use set_cmdstan_home!.")
+    ""
+  end
+end
+
+"""Set the path for the `CMDSTAN_HOME` environment variable.
+Example: `set_cmdstan_home!(homedir() * "/Projects/Stan/cmdstan/")`
+"""
+set_cmdstan_home!(path) = global CMDSTAN_HOME = path
+
 stan_help = stan_sample
 
 export
@@ -37,7 +65,8 @@ export
   stan_sample,
   read_summary,
   stan_summary,
-  set_cmdstan_home,
+  get_cmdstan_home,
+  set_cmdstan_home!,
   findall
 
 end # module

@@ -9,7 +9,6 @@
 [![Build Status](https://travis-ci.com/StanJulia/StanBase.jl.svg?branch=master)](https://travis-ci.com/StanJulia/StanBase.jl)
 [![codecov.io](http://codecov.io/github/StanJulia/StanBase.jl/coverage.svg?branch=master)](http://codecov.io/github/StanJulia/StanBase.jl?branch=master)
 
-
 ## Introduction
 
 This package contains all the common components for several application packages wrapping Stan's `cmdstan` executable. 

@@ -9,7 +9,7 @@ module StanBase
 
 using DocStringExtensions: FIELDS, SIGNATURES, TYPEDEF
 using Unicode, DelimitedFiles, Distributed
-using MCMCChains
+#using MCMCChains
 using Parameters
 
 using StanDump
@@ -57,6 +57,7 @@ stan_help = stan_sample
 export
   @shared_fields_stanmodels,
   CmdStanModels,
+  StanModelError,
   HelpModel,
   cmdline,
   stan_help,

@@ -1,4 +1,4 @@
-using DataFrames, MCMCChains, CSV
+using DataFrames, CSV
 
 """
 
@@ -6,21 +6,23 @@ using DataFrames, MCMCChains, CSV
 
 Read summary output file created by stansummary. 
 
-### Method
-```julia
-read_summary(m)
-```
+$(SIGNATURES)
 
 ### Required arguments
 ```julia
-* `m`    : A Stan model object, e.g. SampleModel
+* `m`                                  : A Stan model object, e.g. SampleModel
+```
+
+### Optional arguments
+```julia
+* `verbose=false`                      : Display summary
 ```
 
 """
-function read_summary(m::T) where {T <: CmdStanModels}
+function read_summary(m::T, printsummary=false) where {T <: CmdStanModels}
 
   fname = "$(m.output_base)_summary.csv"
-  !isfile(fname) && stan_summary(m)
+  !isfile(fname) && stan_summary(m, printsummary)
 
   df = CSV.read(fname, delim=",", comment="#")
   
@@ -31,6 +33,6 @@ function read_summary(m::T) where {T <: CmdStanModels}
   rename!(df, Symbol.(cnames), makeunique=true)
   df[!, :parameters] = Symbol.(df[!, :parameters])
   
-  ChainDataFrame("CmdStan Summary", df)
+  df
   
 end   # end of read_samples

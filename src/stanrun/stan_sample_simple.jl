@@ -96,11 +96,35 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
   # batch_size=1, on_error=nothing, retry_delays=[],
   # retry_check=nothing) -> collection
 
+  # Third approach, as in CmdStan.jl
+  res = run(pipeline(par(model.cmds),
+    stdout=log_file_path(model.output_base, 1)))
+
+  # Second approach (still using pmap)
+  #=
+  cmds = Vector{Base.CmdRedirect}()
+  return_codes = Array{Bool,1}()
+  for thiscmd in cmds_and_paths
+    #verbose && println(thiscmd)
+    cmd, (sample_path, log_path) = thiscmd
+    #verbose && println(cmd)
+    append!(cmds, [cmd])
+  end
+  append!(return_codes, success(pmap(run, cmds)))
+  verbose && println(return_codes)
+  return_codes
+  =#
+
+  # Original approach (StanRun)
+  #=
   pmap(cmds_and_paths) do cmd_and_path
       cmd, (sample_path, log_path) = cmd_and_path
       verbose && println("\n$(cmd)\n")
-      run(cmd)
+      res = run(cmd)
+      verbose && println("\n$(res)\n")
+      success(res) ? sample_path : nothing, log_path
   end
+  =#
     
 end
 

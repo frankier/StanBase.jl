@@ -1,5 +1,9 @@
 """
 
+# read_summary
+
+Create a `name`_summary.csv file. 
+
 $(SIGNATURES)
 
 ### Required arguments
@@ -9,14 +13,14 @@ $(SIGNATURES)
 ```
 """
 function stan_summary(
-  model::T; 
+  model::T, 
   printsummary=false) where {T <: CmdStanModels}
   
   #local csvfile
   n_chains = get_n_chains(model)
   
   samplefiles = String[]
-  for i in 1:n_chains
+  for i in 1:get_n_chains(model)
     push!(samplefiles, "$(model.output_base)_chain_$(i).csv")
   end
   try
@@ -24,10 +28,11 @@ function stan_summary(
     csvfile = "$(model.output_base)_summary.csv"
     isfile(csvfile) && rm(csvfile)
     cmd = `$(pstring) --csv_file=$(csvfile) $(par(samplefiles))`
-    run(cmd)
+    outb = IOBuffer()
+    run(pipeline(cmd, stdout=outb));
     if printsummary
       cmd = `$(pstring) $(par(samplefiles))`
-      resfile = open(cmd; read=true)
+      resfile = open(cmd; read=true);
       print(read(resfile, String))
     end
   catch e

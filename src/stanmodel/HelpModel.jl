@@ -1,6 +1,5 @@
 import Base.show
 using Random
-#using StanRun
 
 mutable struct HelpModel <: CmdStanModels	
     @shared_fields_stanmodels

@@ -20,13 +20,13 @@ API.
 
 $(FIELDS)
 """
-struct StanModelError{T <: CmdStanModels} <: Exception
-    model::T
+struct StanModelError <: Exception
+    name::String
     message::String
 end
 
 function Base.showerror(io::IO, e::StanModelError)
-    print(io, "error when compiling ", e.model, ":\n",
+    print(io, "\nError when compiling SampleModel ", e.name, ":\n",
           e.message)
 end
 
@@ -49,7 +49,7 @@ function ensure_executable(model::T) where T <: CmdStanModels
     if is_ok
         exec_path
     else
-        throw(StanModelError(model, String(take!(error_output))))
+        throw(StanModelError(model.name, String(take!(error_output))))
     end
 end
 

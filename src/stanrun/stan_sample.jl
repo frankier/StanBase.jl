@@ -25,6 +25,14 @@ sample_file_path(output_base::AbstractString, id::Int) = output_base * "_chain_$
 """
 $(SIGNATURES)
 
+Default `output_base` chain files, in tmpdir. Internal, not exported.
+"""
+generated_quantities_file_path(output_base::AbstractString, id::Int) = 
+  output_base * "_generated_quantities_$(id).csv"
+
+"""
+$(SIGNATURES)
+
 Default `output_base` log files, in tmpdir. Internal, not exported.
 """
 log_file_path(output_base::AbstractString, id::Int) = output_base * "_log_$(id).log"
@@ -84,12 +92,8 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
     isfile(sfile) && rm(sfile)
   end
 
-  verbose && println()
-  verbose && run(`ls -lia $(model.tmpdir)`)
   cmds_and_paths = [stan_cmd_and_paths(model, id; kwargs...)
                     for id in 1:get_n_chains(model)]
-  verbose && println("\n$(cmds_and_paths)\n")
-  verbose && run(`ls -lia $(model.tmpdir)`)
 
   # Manual
   # pmap(f, [::AbstractWorkerPool], c...; distributed=true, 

@@ -8,8 +8,8 @@ $(SIGNATURES)
 
 ### Required arguments
 ```julia
-* `model::SampleModel             : Stanmodel
-* `file::String`                : Name of file with samples
+* `model::SampleModel             : SampleModel
+* `file::String`                  : Name of file with samples
 ```
 """
 function stan_summary(

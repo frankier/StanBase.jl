@@ -15,7 +15,12 @@ $(SIGNATURES)
 
 ### Optional arguments
 ```julia
-* `verbose=false`                      : Display summary
+* `print_summary=false`                : Print cmdstan summary
+```
+
+### Returns
+```julia
+* `df`                                 : Dataframe containing the cmdstan summary
 ```
 
 """

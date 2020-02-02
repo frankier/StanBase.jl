@@ -45,40 +45,36 @@ Default `output_base` diagnostic files, in tmpdir. Internal, not exported.
 diagnostic_file_path(output_base::AbstractString, id::Int) = output_base * "_diagnostic_$(id).csv"
 
 """
-$(SIGNATURES)
+# stan_sample 
 
-Sample `model.n_chains` from `model` using `data` and `init`.
+Execute the method contained in a CmdStanModel.
 
-Return the full paths of the sample files and logs as pairs.
+### Required arguments
+```julia
+* `model::AbstractString`              : CmdStanModel subtype
+```
 
-In case of an error with a chain, the first value is `nothing`.
-
-`output_base` is used to write the data file (using `StanDump.stan_dump`) and to determine
-the resulting names for the sampler output. It defaults to `model.name`.
-
-When `data` or `init` are provided as a `NamedTuple`or a `Dict`, it is written using
-`StanDump.stan_dump` first. If an AbstractString is specified, it is used as a path
-to an existing file which will be copied to the output directory unless the length == 0.
-
-When `debug=true` (default: `false`) is provided, extensive debugging info is printed.
+### Optional arguments
+```julia
+* `n_chains=4`                         : Number of chains
+* `init`                               : Init dict
+* `data`                               : Data dict
+* `diagnostics=false`                  : Generate diagnost files (deprecated?)
+```
+### Returns
+```julia
+* `rc`                                 Return code, 0 is success
+```
 """
 function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
-  n_chains = 4
-  rm_samples = true
-  diagnostics = false
-  verbose = false
-  if :debug in keys(kwargs)
-    verbose = kwargs[:debug]
-  end
-    
-  verbose && println("\nstan_sample: $(model.output_base)\n")
 
+  n_chains = 4
+  diagnostics = false
+    
   if :n_chains in keys(kwargs) 
     n_chains = kwargs[:n_chains]
     set_n_chains(model, n_chains)
   end
-  :init in keys(kwargs) && update_R_files(model, kwargs[:init], n_chains, "init")
-  :data in keys(kwargs) && update_R_files(model, kwargs[:data], n_chains, "data")
 
   # Diagnostics files requested?
   if :diagnostics in keys(kwargs)
@@ -92,17 +88,14 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
     isfile(sfile) && rm(sfile)
   end
 
+  :init in keys(kwargs) && update_R_files(model, kwargs[:init], n_chains, "init")
+  :data in keys(kwargs) && update_R_files(model, kwargs[:data], n_chains, "data")
+
   cmds_and_paths = [stan_cmd_and_paths(model, id; kwargs...)
                     for id in 1:get_n_chains(model)]
 
-  # Manual
-  # pmap(f, [::AbstractWorkerPool], c...; distributed=true, 
-  # batch_size=1, on_error=nothing, retry_delays=[],
-  # retry_check=nothing) -> collection
-
   pmap(cmds_and_paths) do cmd_and_path
       cmd, (sample_path, log_path) = cmd_and_path
-      verbose && println("\n$(cmd)\n")
       run(cmd)
   end
     
@@ -114,18 +107,12 @@ $(SIGNATURES)
 Run a Stan command. Internal, not exported.
 """
 function stan_cmd_and_paths(model::T, id::Integer; kwargs...) where {T <: CmdStanModels}
-    verbose = false
-    if :debug in keys(kwargs)
-      verbose = kwargs[:debug]
-    end
-    verbose && println("\nstan_cmd_paths: $(model.output_base)\n")
     append!(model.sample_file, [sample_file_path(model.output_base, id)])
     append!(model.log_file, [log_file_path(model.output_base, id)])
     if length(model.diagnostic_file) > 0
       append!(model.diagnostic_file, [diagnostic_file_path(model.output_base, id)])
     end
     append!(model.cmds, [cmdline(model, id)])
-    verbose && println("\n$(cmdline(model, id))\n")
     pipeline(model.cmds[id]; stdout=model.log_file[id]), (model.sample_file[id], model.log_file[id])
     
 end

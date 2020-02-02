@@ -11,12 +11,12 @@ cmdline(m)
 
 ### Required arguments
 ```julia
-* `m::CmdStanSampleModel`                : CmdStanSampleModel
+* `m::CmdStanModels`                : Subtype object of CmdStanModels
 ```
 
-### Related help
+### Returns
 ```julia
-?CmdStanSampleModel                      : Create a CmdStanSampleModel
+* `cmd`                             : Method depended portion of the cmd
 ```
 """
 function cmdline(m::HelpModel, id)

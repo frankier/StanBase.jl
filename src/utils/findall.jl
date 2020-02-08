@@ -1,21 +1,15 @@
 import Base.findall
 
-#=
-function findall(f, a::Array{T, N}) where {T, N}
-    j = 1
-    b = Vector{Int}(undef, length(a))
-    @inbounds for i in eachindex(a)
-        @inbounds if f(a[i])
-            b[j] = i
-            j += 1
-        end
-    end
-    resize!(b, j-1)
-    sizehint!(b, length(b))
-    return b
-end
-=#
+"""
 
+Replacement for `findall` for Julia versions < 1.3
+
+$(SIGNATURES)
+
+# Extended help
+
+Exported if Julia VERSION.minor < 3
+"""
 function findall(t::Union{AbstractString,Regex}, s::AbstractString; overlap::Bool=false)
     found = UnitRange{Int}[]
     i, e = firstindex(s), lastindex(s)
@@ -29,3 +23,5 @@ function findall(t::Union{AbstractString,Regex}, s::AbstractString; overlap::Boo
     end
 end
 
+export
+    findall

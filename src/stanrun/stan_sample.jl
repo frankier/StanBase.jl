@@ -2,56 +2,89 @@ data_union = Union{Nothing, AbstractString, Dict, Array{T, 1} where T}
 init_union = Union{Nothing, StanBase.Init, AbstractString, Dict, Array{T, 1} where T}
 
 """
+
+Default `output_base` data files, in tmpdir.
+
 $(SIGNATURES)
 
-Default `output_base` data files, in tmpdir. Internal, not exported.
+# Extended help
+
+Internal, not exported.
 """
 data_file_path(output_base::AbstractString, id::Int) = output_base * "_data_$(id).R"
 
 """
+
+Default `output_base` init files, in tmpdir.
+
 $(SIGNATURES)
 
-Default `output_base` init files, in tmpdir. Internal, not exported.
+# Extended help
+
+Internal, not exported.
 """
 init_file_path(output_base::AbstractString, id::Int) = output_base * "_init_$(id).R"
 
 """
+
+Default `output_base` chain files, in tmpdir.
+
 $(SIGNATURES)
 
-Default `output_base` chain files, in tmpdir. Internal, not exported.
+# Extended help
+
+Internal, not exported.
 """
 sample_file_path(output_base::AbstractString, id::Int) = output_base * "_chain_$(id).csv"
 
 """
+
+Default `output_base` for generated_quatities files, in tmpdir.
+
 $(SIGNATURES)
 
-Default `output_base` chain files, in tmpdir. Internal, not exported.
+# Extended help
+
+Internal, not exported.
 """
 generated_quantities_file_path(output_base::AbstractString, id::Int) = 
   output_base * "_generated_quantities_$(id).csv"
 
 """
+
+Default `output_base` log files, in tmpdir.
+
 $(SIGNATURES)
 
-Default `output_base` log files, in tmpdir. Internal, not exported.
+# Extended help
+
+Internal, not exported.
 """
 log_file_path(output_base::AbstractString, id::Int) = output_base * "_log_$(id).log"
 
 """
+
+Default `output_base` diagnostic files, in tmpdir.
+
 $(SIGNATURES)
 
-Default `output_base` diagnostic files, in tmpdir. Internal, not exported.
+# Extended help
+
+Internal, not exported.
 """
 diagnostic_file_path(output_base::AbstractString, id::Int) = output_base * "_diagnostic_$(id).csv"
 
 """
-# stan_sample 
 
 Execute the method contained in a CmdStanModel.
 
+$(SIGNATURES)
+
+# Extended help
+
 ### Required arguments
 ```julia
-* `model::AbstractString`              : CmdStanModel subtype
+* `model <: CmdStanModels`             : CmdStanModel subtype, e.g. SampleModel
 ```
 
 ### Optional arguments
@@ -63,7 +96,7 @@ Execute the method contained in a CmdStanModel.
 ```
 ### Returns
 ```julia
-* `rc`                                 Return code, 0 is success
+* `rc`                                 : Return code, 0 is success
 ```
 """
 function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
@@ -102,9 +135,12 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
 end
 
 """
+
+Generate a cmdstan command line (a run `cmd`).
+
 $(SIGNATURES)
 
-Run a Stan command. Internal, not exported.
+Internal, not exported.
 """
 function stan_cmd_and_paths(model::T, id::Integer; kwargs...) where {T <: CmdStanModels}
     append!(model.sample_file, [sample_file_path(model.output_base, id)])
@@ -117,6 +153,24 @@ function stan_cmd_and_paths(model::T, id::Integer; kwargs...) where {T <: CmdSta
     
 end
 
+"""
+
+Update data or init R files.
+
+$(SIGNATURES)
+
+# Extended help
+
+### Required arguments
+```julia
+* `model`                         : CmdStanModels object
+* `input`                         : Input data or init values
+* `n_chains`                      : Number of chains in model
+* `fname_part="data"`             : Data or init R files to be created
+```
+
+Not exported.
+"""
 function update_R_files(model, input, n_chains, fname_part="data")
   
   model_field = fname_part == "data" ? model.data_file : model.init_file
@@ -150,10 +204,19 @@ function update_R_files(model, input, n_chains, fname_part="data")
   
 end
 
-function setup_diagnostics(model, n_chains)
-  
+"""
+Helper function for the (deprecated) diagnostics file generation.
+
+$(SIGNATURES)
+
+# Extended help
+
+I am not aware the diagnostic files contain other info then the regular .csv files.
+Currently I have not disabled this functionality. Please let me know if this
+feature should be included/enabled.
+"""
+function setup_diagnostics(model, n_chains)  
   for i in 1:n_chains
     append!(model.diagnostic_file, [model.output_base*"_diagnostic_$i.log"])
-  end
-  
+  end  
 end

@@ -20,6 +20,10 @@ model {
 sm = HelpModel( "bernoulli", bernoulli;
   method = StanBase.Help(:sample))
 
+# Other options for method are:
+# :optimize, :diagnose or :variational
+# see ?CmdStanModels
+
 rc = stan_help(sm; n_chains=1)
 
 if success(rc)

@@ -1,8 +1,10 @@
 """
 
-# Method `update_model_file`
+Update Stan language model file (if necessary).
 
-Update Stan language model file if necessary 
+$(SIGNATURES)
+
+# Extended help
 
 ### Method
 ```julia
@@ -17,6 +19,7 @@ StanSample.update_model_file(
 * `str::AbstractString`                 : Stan model string
 ```
 
+Internal, not exported.
 """
 function update_model_file(file::AbstractString, model::AbstractString)
   
@@ -36,6 +39,28 @@ function update_model_file(file::AbstractString, model::AbstractString)
   
 end
 
+"""
+
+Parse and interpolate Stan functionality into the Stan Language model before compilation
+of the model by stanc.
+
+$(SIGNATURES)
+
+# Extended help
+
+### Method
+```julia
+StanSample.parse_and_interpolate(
+  model::AbstractString)
+)
+```
+### Required arguments
+```julia
+* `model::AbstractString`              : String with Stan model
+```
+
+Internal, not exported.
+"""
 function parse_and_interpolate(model::AbstractString)
   newmodel = ""
   lines = split(model, "\n")

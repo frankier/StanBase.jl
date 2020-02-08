@@ -1,16 +1,24 @@
 """
 
-# read_summary
-
 Create a `name`_summary.csv file. 
 
 $(SIGNATURES)
 
+# Extended help
+
 ### Required arguments
 ```julia
 * `model::SampleModel             : SampleModel
-* `file::String`                  : Name of file with samples
 ```
+
+### Optional arguments
+```julia
+* `printsummary=false             : Display summary
+```
+
+After completion a ..._summary.csv file has been created.
+This file can be read as a DataFrame in by `df = read(summary(model))`
+
 """
 function stan_summary(
   model::T, 

@@ -1,8 +1,10 @@
 """
 
-# par 
+Set cmds up for parallel execution.
 
-Set cmds up for parallel execution. 
+$(SIGNATURES)
+
+# Extended help
 
 ### Method
 ```julia
@@ -27,7 +29,6 @@ or
 
 * `cmd::Array{String, 1}`              : Array of cmds as Strings
 ```
-
 """
 function par(cmds::Array{Base.AbstractCmd,1})
   if length(cmds) > 2

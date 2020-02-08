@@ -2,11 +2,11 @@ using DataFrames, CSV
 
 """
 
-# read_summary
-
 Read summary output file created by stansummary. 
 
 $(SIGNATURES)
+
+# Extended help
 
 ### Required arguments
 ```julia

@@ -1,38 +1,43 @@
 """
 
-# cmdline 
+Recursively parse the model struct to build the first part of the command line. 
 
-Recursively parse the model to construct command line. 
+$(SIGNATURES)
+
+# Extended help
 
 ### Method
 ```julia
-cmdline(m)
+cmdline(model)
 ```
 
 ### Required arguments
 ```julia
-* `m::CmdStanModels`                : Subtype object of CmdStanModels
+* `model::CmdStanModels`               : Subtype object of CmdStanModels
 ```
 
 ### Returns
 ```julia
-* `cmd`                             : Method depended portion of the cmd
+* `cmd`                                : Method depended portion of the cmd
 ```
+
+Internal, not exported.
 """
-function cmdline(m::HelpModel, id)
+function cmdline(model::HelpModel, id)
   
   #=
   `executable_path sample help`
   =#
   
   cmd = ``
-  if isa(m, HelpModel)
+  if isa(model, HelpModel)
     # Inserts the executable for unix and windows
-    cmd = `$(m.exec_path)`
+    cmd = `$(model.exec_path)`
 
     # `help` specific portion of the model
-    #cmd = `$cmd $(split(lowercase(string(typeof(m))), '.')[end])`
-    cmd = `$cmd $(getfield(m.method, :help)) help`
+    cmd = `$cmd $(getfield(model.method, :help)) help`
+
+    # In this simple case, no additional info is needed in the command line
   end
   
   cmd

@@ -1,7 +1,10 @@
 """
-$(SIGNATURES)
 
 Executable path corresponding to a source file, or a model.
+
+$(SIGNATURES)
+
+# Extended help
 
 Internal, not exported.
 """
@@ -13,10 +16,14 @@ executable_path(model::T) where T <: CmdStanModels =
     executable_path(model.tmpdir)
 
 """
+
+Error thrown when a Stan model fails to compile. 
+
 $(TYPEDEF)
 
-Error thrown when a Stan model fails to compile. Accessing fields directly is part of the
-API.
+# Extended help
+
+Accessing fields directly is part of the API.
 
 $(FIELDS)
 """
@@ -31,9 +38,12 @@ function Base.showerror(io::IO, e::StanModelError)
 end
 
 """
-$(SIGNATURES)
 
 Ensure that a compiled model executable exists, and return its path.
+
+$(SIGNATURES)
+
+# Extended help
 
 If compilation fails, a `StanModelError` is returned instead.
 
@@ -54,9 +64,10 @@ function ensure_executable(model::T) where T <: CmdStanModels
 end
 
 """
-$(SIGNATURES)
 
 Compile a model, throwing an error if it failed.
+
+$(SIGNATURES)
 """
 function stan_compile(model::T) where T <: CmdStanModels
     ensure_executable(model)

@@ -89,10 +89,8 @@ $(SIGNATURES)
 
 ### Optional arguments
 ```julia
-* `n_chains=4`                         : Number of chains
 * `init`                               : Init dict
 * `data`                               : Data dict
-* `diagnostics=false`                  : Generate diagnost files (deprecated?)
 ```
 ### Returns
 ```julia
@@ -101,22 +99,17 @@ $(SIGNATURES)
 """
 function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
 
-  n_chains = 4
+  n_chains = get_n_chains(model)
   diagnostics = false
-    
-  if :n_chains in keys(kwargs) 
-    n_chains = kwargs[:n_chains]
-    set_n_chains(model, n_chains)
-  end
-
+  
   # Diagnostics files requested?
   if :diagnostics in keys(kwargs)
     diagnostics = kwargs[:diagnostics]
-    setup_diagnostics(model, get_n_chains(model))
+    setup_diagnostics(model, n_chains)
   end
 
   # Remove existing sample files
-  for id in 1:get_n_chains(model)
+  for id in 1:n_chains
     sfile = sample_file_path(model.output_base, id)
     isfile(sfile) && rm(sfile)
   end
@@ -125,7 +118,7 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
   :data in keys(kwargs) && update_R_files(model, kwargs[:data], n_chains, "data")
 
   cmds_and_paths = [stan_cmd_and_paths(model, id; kwargs...)
-                    for id in 1:get_n_chains(model)]
+                    for id in 1:n_chains]
 
   pmap(cmds_and_paths) do cmd_and_path
       cmd, (sample_path, log_path) = cmd_and_path

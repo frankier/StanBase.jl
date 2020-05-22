@@ -15,7 +15,7 @@ $(SIGNATURES)
 
 ### Optional arguments
 ```julia
-* `print_summary=false`                : Print cmdstan summary
+* `printsummary=false`                 : Print cmdstan summary
 ```
 
 ### Returns

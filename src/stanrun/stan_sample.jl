@@ -117,14 +117,13 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
   :init in keys(kwargs) && update_R_files(model, kwargs[:init], n_chains, "init")
   :data in keys(kwargs) && update_R_files(model, kwargs[:data], n_chains, "data")
 
-  cmds_and_paths = [stan_cmd_and_paths(model, id; kwargs...)
-                    for id in 1:n_chains]
+  cmds = [stan_cmds(model, id; kwargs...) for id in 1:n_chains]
 
-  pmap(cmds_and_paths) do cmd_and_path
-      cmd, (sample_path, log_path) = cmd_and_path
-      run(cmd)
-  end
-    
+  #println(typeof(cmds))
+  #println()
+  #println(cmds)
+
+  run(pipeline(par(cmds), stdout=model.log_file[1]))
 end
 
 """
@@ -135,15 +134,13 @@ $(SIGNATURES)
 
 Internal, not exported.
 """
-function stan_cmd_and_paths(model::T, id::Integer; kwargs...) where {T <: CmdStanModels}
+function stan_cmds(model::T, id::Integer; kwargs...) where {T <: CmdStanModels}
     append!(model.sample_file, [sample_file_path(model.output_base, id)])
     append!(model.log_file, [log_file_path(model.output_base, id)])
     if length(model.diagnostic_file) > 0
       append!(model.diagnostic_file, [diagnostic_file_path(model.output_base, id)])
     end
-    append!(model.cmds, [cmdline(model, id)])
-    pipeline(model.cmds[id]; stdout=model.log_file[id]), (model.sample_file[id], model.log_file[id])
-    
+    cmdline(model, id)
 end
 
 """

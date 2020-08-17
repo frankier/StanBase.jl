@@ -29,7 +29,7 @@ function read_summary(m::T, printsummary=false) where {T <: CmdStanModels}
   fname = "$(m.output_base)_summary.csv"
   !isfile(fname) && stan_summary(m, printsummary)
 
-  df = CSV.read(fname, delim=",", comment="#")
+  df = CSV.read(fname, DataFrame; delim=",", comment="#")
   
   cnames = lowercase.(convert.(String, String.(names(df))))
   cnames[1] = "parameters"

@@ -17,16 +17,22 @@ model {
 ";
 
 
-@testset "Basic HelpModel" begin
-  
-  sm = HelpModel( "help", stan_prog)
+if haskey(ENV, "JULIA_CMDSTAN_HOME")
+  println("\nRunning StanBase.jl tests")
 
-  return_codes = stan_sample(sm; n_chains=4)
+  @testset "Basic HelpModel" begin
+    
+    sm = HelpModel( "help", stan_prog)
 
-  if success(return_codes)
-    println()
-    @test sm.method == StanBase.Help(:sample)
-    @test StanBase.get_n_chains(sm) == 4
+    return_codes = stan_sample(sm; n_chains=4)
+
+    if success(return_codes)
+      println()
+      @test sm.method == StanBase.Help(:sample)
+      @test StanBase.get_n_chains(sm) == 4
+    end
+
   end
-
+else
+  println("\nJULIA_CMDSTAN_HOME not set. Skipping tests")
 end

@@ -1,23 +1,24 @@
 using StanBase
 using Test
 
-stan_prog = "
-data { 
-  int<lower=1> N; 
-  int<lower=0,upper=1> y[N];
-  real empty[0];
-} 
-parameters {
-  real<lower=0,upper=1> theta;
-} 
-model {
-  theta ~ beta(1,1);
-  y ~ bernoulli(theta);
-}
-";
-
-
 if haskey(ENV, "JULIA_CMDSTAN_HOME")
+
+  stan_prog = "
+  data { 
+    int<lower=1> N; 
+    int<lower=0,upper=1> y[N];
+    real empty[0];
+  } 
+  parameters {
+    real<lower=0,upper=1> theta;
+  } 
+  model {
+    theta ~ beta(1,1);
+    y ~ bernoulli(theta);
+  }
+  ";
+
+
   println("\nRunning StanBase.jl tests")
 
   @testset "Basic HelpModel" begin

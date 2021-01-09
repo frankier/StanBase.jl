@@ -117,13 +117,13 @@ function stan_sample(model::T; kwargs...) where {T <: CmdStanModels}
   :init in keys(kwargs) && update_R_files(model, kwargs[:init], n_chains, "init")
   :data in keys(kwargs) && update_R_files(model, kwargs[:data], n_chains, "data")
 
-  cmds = [stan_cmds(model, id; kwargs...) for id in 1:n_chains]
+  model.cmds = [stan_cmds(model, id; kwargs...) for id in 1:n_chains]
 
-  #println(typeof(cmds))
+  #println(typeof(model.cmds))
   #println()
-  #println(cmds)
+  #println(model.cmds)
 
-  run(pipeline(par(cmds), stdout=model.log_file[1]))
+  run(pipeline(par(model.cmds), stdout=model.log_file[1]))
 end
 
 """

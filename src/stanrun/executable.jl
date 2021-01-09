@@ -9,7 +9,10 @@ $(SIGNATURES)
 Internal, not exported.
 """
 function executable_path(source_path::AbstractString)
-    replace_ext(source_path, Sys.iswindows() ? ".exe" : "")
+    if Sys.iswindows()
+        source_path =  source_path * ".exe"
+    end
+    source_path = source_path
 end
 
 executable_path(model::T) where T <: CmdStanModels =

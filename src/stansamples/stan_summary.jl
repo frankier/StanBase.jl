@@ -38,7 +38,7 @@ function stan_summary(
     end
     csvfile = "$(model.output_base)_summary.csv"
     isfile(csvfile) && rm(csvfile)
-    cmd = `$(pstring) --csv_file=$(csvfile) $(par(samplefiles))`
+    cmd = `$(pstring) -c $(csvfile) $(par(samplefiles))`
     outb = IOBuffer()
     run(pipeline(cmd, stdout=outb));
     if printsummary

@@ -33,6 +33,9 @@ function stan_summary(
   end
   try
     pstring = joinpath("$(model.cmdstan_home)", "bin", "stansummary")
+    if Sys.iswindows()
+      pstring = pstring * ".exe"
+    end
     csvfile = "$(model.output_base)_summary.csv"
     isfile(csvfile) && rm(csvfile)
     cmd = `$(pstring) --csv_file=$(csvfile) $(par(samplefiles))`

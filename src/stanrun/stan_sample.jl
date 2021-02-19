@@ -23,7 +23,8 @@ $(SIGNATURES)
 
 Internal, not exported.
 """
-init_file_path(output_base::AbstractString, id::Int) = output_base * "_init_$(id).R"
+init_file_path(output_base::AbstractString, id::Int) =
+  output_base * "_init_$(id).R"
 
 """
 
@@ -35,7 +36,8 @@ $(SIGNATURES)
 
 Internal, not exported.
 """
-sample_file_path(output_base::AbstractString, id::Int) = output_base * "_chain_$(id).csv"
+sample_file_path(output_base::AbstractString, id::Int) =
+  output_base * "_chain_$(id).csv"
 
 """
 
@@ -60,7 +62,8 @@ $(SIGNATURES)
 
 Internal, not exported.
 """
-log_file_path(output_base::AbstractString, id::Int) = output_base * "_log_$(id).log"
+log_file_path(output_base::AbstractString, id::Int) =
+  output_base * "_log_$(id).log"
 
 """
 
@@ -72,7 +75,8 @@ $(SIGNATURES)
 
 Internal, not exported.
 """
-diagnostic_file_path(output_base::AbstractString, id::Int) = output_base * "_diagnostic_$(id).csv"
+diagnostic_file_path(output_base::AbstractString, id::Int) =
+  output_base * "_diagnostic_$(id).csv"
 
 """
 

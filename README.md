@@ -22,11 +22,6 @@
 ![Lifecycle](https://img.shields.io/badge/lifecycle-archived-red.svg)
 ![Lifecycle](https://img.shields.io/badge/lifecycle-dormant-blue.svg) -->
 
-[![Build Status](https://travis-ci.com/StanJulia/StanBase.jl.svg?branch=master)](https://travis-ci.com/StanJulia/StanBase.jl)
-
-[CI-build]: https://github.com/stanjulia/Stan.jl/workflows/CI/badge.svg?branch=master
-
-
 ## Introduction
 
 This package contains all the common components for several application packages wrapping Stan's `cmdstan` executable. 

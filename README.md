@@ -1,4 +1,19 @@
-# StanBase.jl
+# StanBase
+| **Project Status**                                                               |  **Build Status**                                                                                |
+|:-------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
+|![][project-status-img] | ![][CI-build] |
+
+[docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
+[docs-dev-url]: https://stanjulia.github.io/StanBase.jl/latest
+
+[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-stable-url]: https://stanjulia.github.io/StanBase.jl/stable
+
+[CI-build]: https://github.com/stanjulia/StanBase.jl/workflows/CI/badge.svg?branch=master
+
+[issues-url]: https://github.com/stanjulia/StanBase.jl/issues
+
+[project-status-img]: https://img.shields.io/badge/lifecycle-wip-orange.svg
 
 ![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)<!--
 ![Lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
@@ -6,8 +21,11 @@
 ![Lifecycle](https://img.shields.io/badge/lifecycle-retired-orange.svg)
 ![Lifecycle](https://img.shields.io/badge/lifecycle-archived-red.svg)
 ![Lifecycle](https://img.shields.io/badge/lifecycle-dormant-blue.svg) -->
+
 [![Build Status](https://travis-ci.com/StanJulia/StanBase.jl.svg?branch=master)](https://travis-ci.com/StanJulia/StanBase.jl)
-[![codecov.io](http://codecov.io/github/StanJulia/StanBase.jl/coverage.svg?branch=master)](http://codecov.io/github/StanJulia/StanBase.jl?branch=master)
+
+[CI-build]: https://github.com/stanjulia/Stan.jl/workflows/CI/badge.svg?branch=master
+
 
 ## Introduction
 

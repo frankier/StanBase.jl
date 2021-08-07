@@ -1,4 +1,5 @@
 # StanBase
+
 | **Project Status**          |  **Build Status** |
 |:---------------------------:|:-----------------:|
 |![][project-status-img] | ![][CI-build] |
@@ -17,9 +18,13 @@
 
 ## Introduction
 
-This package contains all the common components for several application packages wrapping Stan's `cmdstan` executable. 
+This package contains all the common components for several method packages wrapping Stan's `cmdstan` executable. 
 
-Stan `methods` supported are in StanSample, StanOptimize, StanVariational, StanDiagnose and `generated_quantities` (included in StanSample.jl).
+Stan `methods` supported are in StanSample, StanOptimize, StanVariational, StanDiagnose and `generated_quantities` (included in StanSample.jl). 
+
+A new package, DiffEqBayesStan.jl is introduced to focus on DifferentialEquations and Stan.
+
+Another package, StanQuap.jl, provides a quadratic approximation using StanOptimize.jl and StanSample.jl as used in the early chapters of [StatisticalRethinking](https://github.com/StatisticalRethinkingJulia).
 
 `StanBase.jl`, `HelpModel.jl`, `help_types.jl` and `cmdline.jl` are the templates that have been used in the cmdstan application packages to support cmdstan options such as `stan_sample`, `stan_variational`, etc. 
 
@@ -33,17 +38,17 @@ The currenly existing package `CmdStan.jl v5.x.x` will continue to exists. A new
 
 ## Installation
 
-This package is registered yet. Install with
+This package is registered. Install it with
 
 ```
 pkg> add StanBase
 ```
 
-This package is loaded automatically when `using ...` any of the application packages.
+This package is loaded automatically when `using ...` any of the Stan method packages.
 
-This package is derived from Tamas Papp's [StanRun.jl](https://github.com/tpapp/StanRun.jl) package. It also uses StanDump.jl. 
+This package is structured somewhat similar to Tamas Papp's [StanRun.jl](https://github.com/tpapp/StanRun.jl) package. It also uses StanDump.jl. 
 
-This and all the application packages need a working [cmdstan](https://mc-stan.org/users/interfaces/cmdstan.html) installation, the path of which you should specify in `JULIA_CMDSTAN_HOME`, eg in your `~/.julia/config/startup.jl` have a line like
+This and all the method packages need a working [cmdstan](https://mc-stan.org/users/interfaces/cmdstan.html) installation, the path of which you should specify in `JULIA_CMDSTAN_HOME`, eg in your `~/.julia/config/startup.jl` have a line like
 ```julia
 # CmdStan setup
 ENV["JULIA_CMDSTAN_HOME"] = expanduser("~/src/cmdstan-2.19.1/") # replace with your path

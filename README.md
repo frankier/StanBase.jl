@@ -26,7 +26,7 @@ A new package, DiffEqBayesStan.jl has been added to focus on DifferentialEquatio
 
 Another package, StanQuap.jl, provides a quadratic approximation using StanOptimize.jl and StanSample.jl as used in the early chapters of [StatisticalRethinking](https://github.com/StatisticalRethinkingJulia).
 
-These six application packages support all features and options currently available in the `cmdstan` exacutable.
+These six application packages support all features and options currently available in the `cmdstan` executable.
 
 The intention is that users of Stan's `cmdstan` executable will never have to install Stanbase.jl, they can simply install any of the application packages listed [here](https://github.com/StanJulia). 
 

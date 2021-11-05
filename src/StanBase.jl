@@ -14,6 +14,7 @@ using StanDump
 
 include("common/cmdstan_home.jl")
 include("common/common_definitions.jl")
+include("common/handle_keywords.jl")
 include("common/update_model_file.jl")
 include("common/par.jl")
 

@@ -93,9 +93,6 @@ function stan_compile(m::T) where T <: CmdStanModels
     nothing
 end
 
-data_union = Union{Nothing, AbstractString, Dict, Array{T, 1} where T}
-init_union = Union{Nothing, AbstractString, Dict, Array{T, 1} where T}
-
 """
 
 Default `output_base` data files, in tmpdir.
@@ -173,74 +170,6 @@ Internal, not exported.
 diagnostic_file_path(output_base::AbstractString, id::Int) =
   output_base * "_diagnostic_$(id).csv"
 
-
-"""
-
-Generate a cmdstan command line (a run `cmd`).
-
-$(SIGNATURES)
-
-Internal, not exported.
-"""
-function stan_cmds(m::T, id::Integer; kwargs...) where {T <: CmdStanModels}
-    append!(m.sample_file, [sample_file_path(m.output_base, id)])
-    append!(m.log_file, [log_file_path(m.output_base, id)])
-    if length(m.diagnostic_file) > 0
-      append!(m.diagnostic_file, [diagnostic_file_path(m.output_base, id)])
-    end
-    cmdline(m, id)
-end
-
-"""
-
-Update data or init R files.
-
-$(SIGNATURES)
-
-# Extended help
-
-### Required arguments
-```julia
-* `m`                             : CmdStanModels object
-* `input`                         : Input data or init values
-* `num_chains`                    : Number of chains in model
-* `fname_part="data"`             : Data or init R files to be created
-```
-
-Not exported.
-"""
-function update_R_files(m, input, num_chains, fname_part="data")
-  
-  m_field = fname_part == "data" ? m.data_file : m.init_file
-  if typeof(input) <: NamedTuple || typeof(input) <: Dict
-    for i in 1:num_chains
-      stan_dump(m.output_base*"_$(fname_part)_$i.R", input, force=true)
-      append!(m_field, [m.output_base*"_$(fname_part)_$i.R"])
-    end
-  elseif  typeof(input) <: Array
-    if length(input) == num_chains
-      for (i, d) in enumerate(input)
-        stan_dump(m.output_base*"_$(fname_part)_$i.R", d, force=true)
-        append!(m_field, [m.output_base*"_$(fname_part)_$i.R"])
-      end
-    else
-      @info "Data vector length does not match number of chains,"
-      @info "only first element in data vector will be used,"
-      for i in 1:num_chains
-        stan_dump(m.output_base*"_$(fname_part)_$i.R", input[1], force=true)
-        append!(m_field, [m.output_base*"_$(fname_part)_$i.R"])
-      end
-    end
-  elseif typeof(input) <: AbstractString && length(input) > 0
-    for i in 1:num_chains
-      cp(input, "$(m.output_base)_$(fname_part)_$i.R", force=true)
-      append!(m_field, [m.output_base*"_$(fname_part)_$i.R"])
-    end
-  else
-    error("\nUnrecognized input argument: $(typeof(input))\n")
-  end
-  
-end
 
 """
 Helper function for the (deprecated) diagnostics file generation.

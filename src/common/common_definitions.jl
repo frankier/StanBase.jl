@@ -11,11 +11,34 @@ Base model specialized in:
 *  VariationalModel             : StanVariational.jl
 *  DiagnoseModel                : StanDiagnose.jl
 ```
-""" 
+"""
 abstract type CmdStanModels end
 
-"""
+make_string = "make"
 
+if Sys.iswindows()
+    make_command =  "mingw32-" * make
+end
+
+"""
+set_make_string!()
+
+Update the name of the make command, e.g. "make" or "minw32-make".
+By default make_string == "make" and on Windows make_string == "ming32-make".
+
+Display value as `StanBase.make_string`.
+
+$(SIGNATURES)
+
+# Extended help
+
+Internal, not exported.
+"""
+function set_make_string!(str = make_string)
+    make_string = str
+end
+
+"""
 make command.
 
 $(SIGNATURES)
@@ -24,12 +47,8 @@ $(SIGNATURES)
 
 Internal, not exported.
 """
-function make_command(make = "make")
-    make_command = make
-    if Sys.iswindows()
-        make_command =  "mingw32-* make
-    end
-    make_command
+function make_command(str = make_string)
+    str
 end
 
 """
@@ -90,7 +109,7 @@ function ensure_executable(m::T) where T <: CmdStanModels
     @unpack cmdstan_home, exec_path = m
     error_output = IOBuffer()
     is_ok = cd(cmdstan_home) do
-        success(pipeline(`make -f $(cmdstan_home)/makefile -C $(cmdstan_home) $(exec_path)`;
+        success(pipeline(`$(make_command()) -f $(cmdstan_home)/makefile -C $(cmdstan_home) $(exec_path)`;
                          stderr = error_output))
     end
     if is_ok

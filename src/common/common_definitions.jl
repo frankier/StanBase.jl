@@ -16,6 +16,24 @@ abstract type CmdStanModels end
 
 """
 
+make command.
+
+$(SIGNATURES)
+
+# Extended help
+
+Internal, not exported.
+"""
+function make_command(make = "make")
+    make_command = make
+    if Sys.iswindows()
+        make_command =  "mingw32-* make
+    end
+    make_command
+end
+
+"""
+
 Executable path corresponding to a source file, or a model.
 
 $(SIGNATURES)

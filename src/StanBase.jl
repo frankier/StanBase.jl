@@ -40,7 +40,9 @@ Executing `versioninfo()` will display the value of `JULIA_CMDSTAN_HOME` if defi
 CMDSTAN_HOME=""
 
 function __init__()
-  global CMDSTAN_HOME = if isdefined(Main, :JULIA_CMDSTAN_HOME)
+  global CMDSTAN_HOME = if haskey(ENV, "CMDSTAN")
+    ENV["CMDSTAN"]
+  elseif isdefined(Main, :JULIA_CMDSTAN_HOME)
     Main.JULIA_CMDSTAN_HOME
   elseif haskey(ENV, "JULIA_CMDSTAN_HOME")
     ENV["JULIA_CMDSTAN_HOME"]

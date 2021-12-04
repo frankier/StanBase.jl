@@ -1,6 +1,9 @@
 
-const CMDSTAN_HOME_VAR = get(ENV, "CMDSTAN", "JULIA_CMDSTAN_HOME")
-
+const CMDSTAN_HOME_VAR = if haskey(ENV, "CMDSTAN")
+    "CMDSTAN"
+else
+    "JULIA_CMDSTAN_HOME"
+end
 
 """
 

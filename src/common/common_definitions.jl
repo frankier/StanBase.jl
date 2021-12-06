@@ -16,28 +16,6 @@ abstract type CmdStanModels end
 
 make_string = "make"
 
-if Sys.iswindows()
-    make_command =  "mingw32-" * make_string
-end
-
-"""
-set_make_string!()
-
-Update the name of the make command, e.g. "make" or "minw32-make".
-By default make_string == "make" and on Windows make_string == "ming32-make".
-
-Display value as `StanBase.make_string`.
-
-$(SIGNATURES)
-
-# Extended help
-
-Internal, not exported.
-"""
-function set_make_string!(str = make_string)
-    make_string = str
-end
-
 """
 make command.
 
@@ -48,7 +26,11 @@ $(SIGNATURES)
 Internal, not exported.
 """
 function make_command(str = make_string)
-    str
+    if Sys.iswindows()
+        "mingw32-" * make_string
+    else
+        str
+    end
 end
 
 """

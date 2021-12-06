@@ -28,22 +28,22 @@ The directory which contains the cmdstan executables such as `bin/stanc` and
 
 # Extended help
 
-Inferred from the environment variable `JULIA_CMDSTAN_HOME` or `ENV["JULIA_CMDSTAN_HOME"]`
+Inferred from the environment variable `CMDSTAN` or `ENV["CMDSTAN"]`
 when available.
 
 If these are not available, use `set_cmdstan_home!` to set the value of CMDSTAN_HOME.
 
 Example: `set_cmdstan_home!(homedir() * "/Projects/Stan/cmdstan/")`
 
-Executing `versioninfo()` will display the value of `JULIA_CMDSTAN_HOME` if defined.
+Executing `versioninfo()` will display the value of `CMDSTAN` if defined.
 """
 CMDSTAN_HOME=""
 
 function __init__()
   global CMDSTAN_HOME = if haskey(ENV, "CMDSTAN")
     ENV["CMDSTAN"]
-  elseif isdefined(Main, :JULIA_CMDSTAN_HOME)
-    Main.JULIA_CMDSTAN_HOME
+  elseif isdefined(Main, :CMDSTAN)
+    Main.CMDSTAN
   elseif haskey(ENV, "JULIA_CMDSTAN_HOME")
     ENV["JULIA_CMDSTAN_HOME"]
   elseif haskey(ENV, "CMDSTAN_HOME")

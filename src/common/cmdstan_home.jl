@@ -1,7 +1,7 @@
 
 const CMDSTAN_HOME_VAR = if haskey(ENV, "CMDSTAN")
     "CMDSTAN"
-else
+elseif haskey(ENV, "JULIA_CMDSTAN_HOME")
     "JULIA_CMDSTAN_HOME"
 end
 

@@ -17,7 +17,7 @@ abstract type CmdStanModels end
 make_string = "make"
 
 if Sys.iswindows()
-    make_command =  "mingw32-" * make
+    make_command =  "mingw32-" * make_string
 end
 
 """

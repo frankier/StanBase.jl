@@ -14,7 +14,7 @@
 
 [issues-url]: https://github.com/stanjulia/StanBase.jl/issues
 
-[project-status-img]: https://img.shields.io/badge/lifecycle-wip-orange.svg
+[project-status-img]: https://img.shields.io/badge/lifecycle-stable-green.svg
 
 ## Introduction
 
@@ -41,8 +41,8 @@ This package is loaded automatically when `using ...` any of the Stan method pac
 
 This package is structured somewhat similar to Tamas Papp's [StanRun.jl](https://github.com/tpapp/StanRun.jl) package. It also uses StanDump.jl. 
 
-This and all the method packages need a working [cmdstan](https://mc-stan.org/users/interfaces/cmdstan.html) installation, the path of which you should specify in `JULIA_CMDSTAN_HOME`, eg in your `~/.julia/config/startup.jl` have a line like
+This and all the method packages need a working [cmdstan](https://mc-stan.org/users/interfaces/cmdstan.html) installation, the path of which you should specify in `CMDSTAN`, eg in your `~/.julia/config/startup.jl` have a line like
 ```julia
 # CmdStan setup
-ENV["JULIA_CMDSTAN_HOME"] = expanduser("~/src/cmdstan-2.19.1/") # replace with your path
+ENV["CMDSTAN"] = expanduser("~/src/cmdstan-2.19.1/") # replace with your path
 ```

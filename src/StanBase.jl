@@ -10,13 +10,14 @@ using DocStringExtensions: FIELDS, SIGNATURES, TYPEDEF
 using Unicode, DelimitedFiles
 using DataFrames, CSV, Parameters
 
-using StanDump
+using JSON3, StanDump
 
 include("common/cmdstan_home.jl")
 include("common/common_definitions.jl")
 include("common/handle_keywords.jl")
 include("common/update_model_file.jl")
 include("common/update_R_files.jl")
+include("common/update_json_files.jl")
 include("common/par.jl")
 
 include("stansamples/stan_summary.jl")

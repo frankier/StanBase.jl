@@ -1,4 +1,4 @@
-# StanBase
+# StanBase v4
 
 | **Project Status**          |  **Build Status** |
 |:---------------------------:|:-----------------:|
@@ -28,21 +28,24 @@ Another package, StanQuap.jl, provides a quadratic approximation using StanOptim
 
 These six application packages support all features and options currently available in the `cmdstan` executable.
 
-The intention is that users of Stan's `cmdstan` executable will never have to install Stanbase.jl, they can simply install any of the application packages listed [here](https://github.com/StanJulia). 
-
 ## Installation
 
 This package is registered. Install it with:
 ```Julia
 pkg> add StanBase
 ```
+The intention is that users of Stan's `cmdstan` executable will never have to install Stanbase.jl, they can simply install any of the application packages listed [here](https://github.com/StanJulia). 
 
-This package is loaded automatically when `using ...` any of the Stan method packages.
-
-This package is structured somewhat similar to Tamas Papp's [StanRun.jl](https://github.com/tpapp/StanRun.jl) package. It also uses StanDump.jl. 
-
-This and all the method packages need a working [cmdstan](https://mc-stan.org/users/interfaces/cmdstan.html) installation, the path of which you should specify in `CMDSTAN`, eg in your `~/.julia/config/startup.jl` have a line like
+This and all the method packages need a working [cmdstan](https://mc-stan.org/users/interfaces/cmdstan.html) installation, the path of which you should specify in `CMDSTAN`, eg in your `~/.julia/config/startup.jl` have a line like:
 ```julia
-# CmdStan setup
-ENV["CMDSTAN"] = expanduser("~/src/cmdstan-2.19.1/") # replace with your path
+ENV["CMDSTAN"] = expanduser("~/.../cmdstan/") # replace with your path
 ```
+
+This package is structured somewhat similar to Tamas Papp's [StanRun.jl](https://github.com/tpapp/StanRun.jl) package. 
+
+## Versions
+
+StanBase.jl v4 supports Stan.jl v9 and StanSample v6 which use C++ level threads by default. This has major consequences for StanSample.jl and Stan.jl (explained in the documentation of Stan.jl v9 and in the on-line help in StanSample.jl v6). As such it is a breaking update.
+
+StannBase.jl versions < v4.0.0 used StanDump.jl to create data.R and init.R files. It is no longer clear if .R files will be supported in future version. Certainly with cmdstan-2.28.2 I have seen error messages when using init.R files. Hence version 4+ uses by default JSON3.jl for this purpose. As JSON3.jl currently doesn't handle multidimensional arrays properly, for now I have added a positional `use_json=true` argument to e.g. stan_sample().
+

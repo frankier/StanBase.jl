@@ -23,7 +23,7 @@ This file can be read as a DataFrame in by `df = read(summary(model))`
 function stan_summary(m::T, printsummary=false) where {T <: CmdStanModels}
   
   #local csvfile
-  n_chains = m.num_chains * m.num_cpp_chains
+  n_chains = max(m.num_chains, m.num_cpp_chains)
   
   samplefiles = String[]
   cpp_chains = m.num_cpp_chains

@@ -36,7 +36,7 @@ pkg> add StanBase
 ```
 although the intention is that users of Stan's `cmdstan` executable will never have to install StanBase.jl, they can simply install any of the application packages listed [here](https://github.com/StanJulia). 
 
-This and all the method packages need a working [cmdstan](https://mc-stan.org/users/interfaces/cmdstan.html) installation, the path of which you should specify in `CMDSTAN`, e.g. in your `~/.julia/config/startup.jl` have a line like:
+This and all the method packages need a working [cmdstan](https://mc-stan.org/users/interfaces/cmdstan.html) installation, the path of which you should specify in an evironment variable `CMDSTAN`, e.g. in your `~/.julia/config/startup.jl` have a line like:
 ```julia
 ENV["CMDSTAN"] = expanduser("~/.../cmdstan/") # replace with your path
 ```
@@ -47,5 +47,7 @@ This package is structured somewhat similar to Tamas Papp's [StanRun.jl](https:/
 
 StanBase.jl v4 supports Stan.jl v9 and StanSample v6 which by default use C++ level threads (and chains). This has major consequences for StanSample.jl and Stan.jl (explained in the documentation of Stan.jl v9 and in the on-line help in StanSample.jl v6). As such StanBase.jl v4 is a breaking update.
 
-StanBase.jl versions < v4.0.0 used StanDump.jl to create data.R and init.R files. It is no longer clear if .R files will be supported in future version of cmdstan. Certainly with cmdstan-2.28.2 I have seen error messages when using init.R files. Hence version 4 uses by default JSON3.jl for this purpose. As JSON3.jl currently doesn't handle multidimensional arrays properly, for now I have added a positional `use_json=true` argument to e.g. stan_sample().
+StanBase.jl versions < v4.0.0 used StanDump.jl to create data.R and init.R files. It is no longer clear if .R files will be supported in future version of cmdstan. Certainly with cmdstan-2.28.2 I have seen error messages when using init.R files. Hence version 4 uses by default JSON3.jl for this purpose. 
+
+As JSON3.jl currently doesn't handle multidimensional arrays properly, for now I have added a positional `use_json=true` argument to e.g. stan_sample(). This is demonstrated in the Stan.jl dyes.jl and dyes_2.jl example scripts.
 

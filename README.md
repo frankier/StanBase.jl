@@ -40,7 +40,6 @@ This and all the method packages need a working [cmdstan](https://mc-stan.org/us
 ```julia
 ENV["CMDSTAN"] = expanduser("~/.../cmdstan/") # replace with your path
 ```
-
 This package is structured somewhat similar to Tamas Papp's [StanRun.jl](https://github.com/tpapp/StanRun.jl) package. 
 
 ## Versions

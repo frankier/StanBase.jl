@@ -20,7 +20,7 @@
 
 This package contains common components and methods for several packages wrapping Stan's `cmdstan` executable. 
 
-Actual Stan `methods` supported, e.g. `stan_sample()`,  `stan_optimize()`, etc., are in StanSample, StanOptimize, StanVariational, StanDiagnose and `generated_quantities` (included in StanSample.jl). 
+The actual Stan methods supported, e.g. `stan_sample()`,  `stan_optimize()`, etc., are in StanSample.jl, StanOptimize.jl, StanVariational.jl, StanDiagnose.jl and `generated_quantities` (included in StanSample.jl). 
 
 A new package, DiffEqBayesStan.jl is available to focus on DifferentialEquations and Stan.
 

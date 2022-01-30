@@ -23,20 +23,28 @@ This file can be read as a DataFrame in by `df = read(summary(model))`
 function stan_summary(m::T, printsummary=false) where {T <: CmdStanModels}
   
   #local csvfile
-  n_chains = max(m.num_chains, m.num_cpp_chains)
+  if hasproperty(m, :num_cpp_chains)
+    n_chains = max(m.num_chains, m.num_cpp_chains)
+  else
+    n_chains = m.num_chains
+  end
   
   samplefiles = String[]
-  cpp_chains = m.num_cpp_chains
+  hasproperty(m, :num_cpp_chains) && (cpp_chains = m.num_cpp_chains)
   julia_chains = m.num_chains
 
   # Read .csv files and return a3d[n_samples, parameters, n_chains]
   for i in 1:julia_chains   # Number of exec processes
-    for k in 1:cpp_chains   # Number of cpp chains handled in cmdstan
-      if m.num_cpp_chains == 1
-        push!(samplefiles, "$(m.output_base)_chain_$(i).csv")
-      else
-        push!(samplefiles, "$(m.output_base)_chain_$(i)_$(k).csv")
+    if hasproperty(m, :num_cpp_chains)
+      for k in 1:cpp_chains   # Number of cpp chains handled in cmdstan
+        if m.num_cpp_chains == 1
+          push!(samplefiles, "$(m.output_base)_chain_$(i).csv")
+        else
+          push!(samplefiles, "$(m.output_base)_chain_$(i)_$(k).csv")
+        end
       end
+    else
+      push!(samplefiles, "$(m.output_base)_chain_$(i).csv")
     end
   end
   #println(samplefiles)

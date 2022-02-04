@@ -11,7 +11,7 @@ $(SIGNATURES)
 * `m`                                  : A Stan model object, e.g. SampleModel
 ```
 
-### Optional arguments
+### Optional positional arguments
 ```julia
 * `printsummary=false`                 : Print cmdstan summary
 ```

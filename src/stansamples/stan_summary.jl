@@ -34,20 +34,17 @@ function stan_summary(m::T, printsummary=false) where {T <: CmdStanModels}
   julia_chains = m.num_chains
 
   # Read .csv files and return a3d[n_samples, parameters, n_chains]
-  for i in 1:julia_chains   # Number of exec processes
-    if hasproperty(m, :num_cpp_chains)
-      for k in 1:cpp_chains   # Number of cpp chains handled in cmdstan
-        if m.num_cpp_chains == 1
-          push!(samplefiles, "$(m.output_base)_chain_$(i).csv")
-        else
-          push!(samplefiles, "$(m.output_base)_chain_$(i)_$(k).csv")
-        end
-      end
-    else
+  if hasproperty(m, :use_cpp_chains) && m.use_cpp_chains
+    for i in 1:m.num_chains   # Number of exec processes
+        push!(samplefiles, "$(m.output_base)_chain_1_$(i).csv")
+    end
+  else
+    for i in 1:m.num_chains   # Number of exec processes
       push!(samplefiles, "$(m.output_base)_chain_$(i).csv")
     end
   end
   #println(samplefiles)
+
   try
     pstring = joinpath("$(m.cmdstan_home)", "bin", "stansummary")
     if Sys.iswindows()

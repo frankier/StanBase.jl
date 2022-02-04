@@ -24,8 +24,6 @@ function update_json_files(m, input, num_chains, fname_part="data")
       open(m.output_base*"_$(fname_part)_$i.json", "w") do f
         JSON3.pretty(f, JSON3.write(input))
       end
-
-      #stan_dump(m.output_base*"_$(fname_part)_$i.R", input, force=true)
       append!(m_field, [m.output_base*"_$(fname_part)_$i.json"])
     end
   elseif  typeof(input) <: Array
@@ -34,8 +32,6 @@ function update_json_files(m, input, num_chains, fname_part="data")
         open(m.output_base*"_$(fname_part)_$i.json", "w") do f
           JSON3.pretty(f, JSON3.write(d))
         end
-
-        #stan_dump(m.output_base*"_$(fname_part)_$i.R", d, force=true)
         append!(m_field, [m.output_base*"_$(fname_part)_$i.json"])
       end
     else
@@ -45,8 +41,6 @@ function update_json_files(m, input, num_chains, fname_part="data")
         open(m.output_base*"_$(fname_part)_$i.json", "w") do f
           JSON3.pretty(f, JSON3.write(input[1]))
         end
-
-        #stan_dump(m.output_base*"_$(fname_part)_$i.R", input[1], force=true)
         append!(m_field, [m.output_base*"_$(fname_part)_$i.json"])
       end
     end

@@ -36,11 +36,15 @@ function handle_keywords!(m::T, kwrds,
             end
         end
     end
-    if check_num_chains && hasproperty(m, :num_cpp_chains)
-        if m.num_chains > 1 && m.num_cpp_chains >1
-            @info "If num_chains > 1, num_cpp_chains must be set to 1."
+
+    if hasproperty(m , :use_cpp_chains) && check_num_chains
+        if m.use_cpp_chains
+            m.num_cpp_chains = m.num_chains
+            m.num_julia_chains = 1
+        else
+            m.num_julia_chains = m.num_chains
             m.num_cpp_chains = 1
-            @info "Set num_cpp_chain = 1."
         end
     end
+
 end

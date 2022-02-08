@@ -4,10 +4,8 @@ Handle keywords in kwargs argument in stan_run(model; kwargs...).
 
 $(SIGNATURES)
 
-Note: Currently I do not suggest to use both C++ level chains and Julia
-level chains. By default, if `num_chains > 1` this method will set
-`num_cpp_chains` to 1 and a message will be displayed. Set the
-postional `check_num_chains` argument to `false` to prevent this.
+In this call `kwrds` are all keyword arguments part of the call
+to e.g. `stan_sample(; kwargs...)`.
 
 """
 function handle_keywords!(m::T, kwrds,

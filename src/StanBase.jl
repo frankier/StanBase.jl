@@ -57,7 +57,7 @@ end
 
 export
   CMDSTAN_HOME,
-  set_cmdstan_home,
+  set_cmdstan_home!,
   make_command,
   CmdStanModels,
   StanModelError,

@@ -22,7 +22,7 @@ function update_json_files(m, input, num_chains, fname_part="data")
   if typeof(input) <: NamedTuple || typeof(input) <: Dict
     for i in 1:num_chains
       open(m.output_base*"_$(fname_part)_$i.json", "w") do f
-        JSON3.pretty(f, JSON3.write(input))
+        JSON.print(f, input)
       end
       append!(m_field, [m.output_base*"_$(fname_part)_$i.json"])
     end
@@ -30,7 +30,7 @@ function update_json_files(m, input, num_chains, fname_part="data")
     if length(input) == num_chains
       for (i, d) in enumerate(input)
         open(m.output_base*"_$(fname_part)_$i.json", "w") do f
-          JSON3.pretty(f, JSON3.write(d))
+          JSON.print(f, d)
         end
         append!(m_field, [m.output_base*"_$(fname_part)_$i.json"])
       end
@@ -39,7 +39,7 @@ function update_json_files(m, input, num_chains, fname_part="data")
       @info "only first element in data vector will be used,"
       for i in 1:num_chains
         open(m.output_base*"_$(fname_part)_$i.json", "w") do f
-          JSON3.pretty(f, JSON3.write(input[1]))
+          JSON.print(f, input[1])
         end
         append!(m_field, [m.output_base*"_$(fname_part)_$i.json"])
       end

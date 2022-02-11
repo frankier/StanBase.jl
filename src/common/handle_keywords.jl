@@ -35,7 +35,7 @@ function handle_keywords!(m::T, kwrds,
         end
     end
 
-    if hasproperty(m , :use_cpp_chains) && check_num_chains
+    if check_num_chains && hasproperty(m , :use_cpp_chains)
         if m.use_cpp_chains
             m.num_cpp_chains = m.num_chains
             m.num_julia_chains = 1
@@ -43,6 +43,8 @@ function handle_keywords!(m::T, kwrds,
             m.num_julia_chains = m.num_chains
             m.num_cpp_chains = 1
         end
+    elseif hasproperty(m , :use_cpp_chains) && m.use_cpp_chains
+        m.num_chains = m.num_cpp_chains * m.num_julia_chains
     end
 
 end

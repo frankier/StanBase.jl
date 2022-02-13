@@ -8,8 +8,7 @@ In this call `kwrds` are all keyword arguments part of the call
 to e.g. `stan_sample(; kwargs...)`.
 
 """
-function handle_keywords!(m::T, kwrds,
-    check_num_chains=true) where {T <: CmdStanModels}
+function handle_keywords!(m::T, kwrds) where {T <: CmdStanModels}
 
     model_keywords = fieldnames(typeof(m))
     excluded_model_keywords = [
@@ -35,7 +34,7 @@ function handle_keywords!(m::T, kwrds,
         end
     end
 
-    if check_num_chains && hasproperty(m , :use_cpp_chains)
+    if hasproperty(m , :use_cpp_chains) && m.check_num_chains
         if m.use_cpp_chains
             m.num_cpp_chains = m.num_chains
             m.num_julia_chains = 1

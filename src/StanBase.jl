@@ -20,8 +20,8 @@ include("common/update_R_files.jl")
 include("common/update_json_files.jl")
 include("common/par.jl")
 
-include("stansamples/stan_summary.jl")
-include("stansamples/read_summary.jl")
+#include("stansamples/stan_summary.jl")
+#include("stansamples/read_summary.jl")
 
 """
 The directory which contains the cmdstan executables such as `bin/stanc` and
@@ -60,8 +60,6 @@ export
   set_cmdstan_home!,
   make_command,
   CmdStanModels,
-  StanModelError,
-  read_summary,
-  stan_summary
+  StanModelError
 
 end # module

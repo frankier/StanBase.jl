@@ -8,9 +8,9 @@ module StanBase
 
 using DocStringExtensions: FIELDS, SIGNATURES, TYPEDEF
 using Unicode, DelimitedFiles
-using DataFrames, CSV, Parameters
+using DataFrames, CSV, Parameters, NamedTupleTools
 
-using JSON, StanDump
+using JSON
 
 include("common/cmdstan_home.jl")
 include("common/common_definitions.jl")

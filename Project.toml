@@ -1,7 +1,7 @@
 name = "StanBase"
 uuid = "d0ee94f6-a23d-54aa-bbe9-7f572d6da7f5"
 authors = ["Rob J Goedman <goedman@mac.com>"]
-version = "4.5.1"
+version = "4.6.0"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -11,9 +11,9 @@ Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+NamedTupleTools = "d9ec5142-1e00-5aa0-9d6a-321866360f50"
 Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
-StanDump = "9713c8f3-0168-54b5-986e-22c526958f39"
 Unicode = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 
 [compat]
@@ -22,8 +22,8 @@ DataFrames = "1.3"
 DocStringExtensions = "0.8, 0.9"
 Documenter = "0.27"
 JSON = "0.21"
+NmaedTupleTools = "0.14"
 Parameters = "0.12"
-StanDump = "0.2"
 julia = "1"
 
 [extras]

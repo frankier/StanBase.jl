@@ -22,7 +22,7 @@ DataFrames = "1.3"
 DocStringExtensions = "0.8, 0.9"
 Documenter = "0.27"
 JSON = "0.21"
-NmaedTupleTools = "0.14"
+NamedTupleTools = "0.14"
 Parameters = "0.12"
 julia = "1"
 

@@ -50,3 +50,6 @@ StanBase.jl v4 supports Stan.jl v9 and StanSample v6 which by default use C++ le
 
 StanBase.jl versions < v4.0.0 used StanDump.jl to create data.R and init.R files. It is no longer clear if .R files will be supported in future version of cmdstan. Certainly with cmdstan-2.28.2 I have seen error messages when using init.R files. Hence version 4 uses by default JSON.jl for this purpose. I have added a positional `use_json=true` argument to e.g. stan_sample().
 
+StanBase v4.7.0 drops support for creating R files (Thanks to Andrew Radcliffe).
+
+

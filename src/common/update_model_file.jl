@@ -31,7 +31,7 @@ function update_model_file(file::AbstractString, m::AbstractString)
     model1 != model2 && rm(file)
   end
   if model1 != model2
-    println("\n$(file) updated.")
+    @info "$(file) updated."
     strmout = open(file, "w")
     write(strmout, model1)
     close(strmout)

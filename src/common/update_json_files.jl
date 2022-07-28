@@ -3,7 +3,9 @@ function convert_matrices(d::Union{NamedTuple, Dict})
     for key in keys(dct)
         if typeof(dct[key]) <: Matrix
             dct[key] = Matrix(dct[key]')
-        end
+        elseif length(size(dct[key])) == 3
+            dct[key] = permutedims(dct[key], [3,2,1])
+       end
     end
     dct
 end
@@ -16,6 +18,8 @@ function convert_matrices(d::T) where {T <: Vector}
         for key in keys(dct)
             if typeof(dct[key]) <: Matrix
                 dct[key] = Matrix(dct[key]')
+            elseif length(size(dct[key])) == 3
+                dct[key] = permutedims(dct[key], [3,2,1])
             end
         end
         append!(dda, [dct])

@@ -39,6 +39,14 @@ function update_json_files(m, input, num_chains, fname_part="data")
   
     m_field = fname_part == "data" ? m.data_file : m.init_file
 
+    if typeof(input) <: OrderedCollections.OrderedDict
+        dct = Dict()
+        for key in keys(input)
+            dct[Symbol(key)] = input[key]
+        end
+        input = dct
+    end
+
     if typeof(input) <: Union{NamedTuple, Dict, Array}
         input = convert_matrices(input)
     end

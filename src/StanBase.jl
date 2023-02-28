@@ -7,7 +7,7 @@ Not really intended to be called directly by a user.
 module StanBase
 
 using DocStringExtensions: FIELDS, SIGNATURES, TYPEDEF
-using Unicode, DelimitedFiles
+using Unicode, DelimitedFiles, OrderedCollections
 using DataFrames, CSV, Parameters, NamedTupleTools
 
 using JSON

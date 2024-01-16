@@ -1,5 +1,15 @@
-function convert_matrices(d::Union{NamedTuple, Dict})
-    dct = typeof(d) <: NamedTuple ? dct = convert(Dict, d) : d
+function convert_matrices(d::NamedTuple)
+    dct = convert(Dict, d)
+    for key in keys(dct)
+        if typeof(dct[key]) <: Array
+            dct[key] = permutedims(dct[key], length(size(dct[key])):-1:1)
+        end
+    end
+    dct
+end
+
+function convert_matrices(d::Dict)
+    dct = deepcopy(d)
     for key in keys(dct)
         if typeof(dct[key]) <: Array
             dct[key] = permutedims(dct[key], length(size(dct[key])):-1:1)
@@ -35,8 +45,9 @@ $(SIGNATURES)
 
 Not exported.
 """
-function update_json_files(m, input, num_chains, fname_part="data")
+function update_json_files(m, the_input, num_chains, fname_part="data")
   
+    input = deepcopy(the_input)
     m_field = fname_part == "data" ? m.data_file : m.init_file
 
     if typeof(input) <: OrderedCollections.OrderedDict
@@ -54,6 +65,7 @@ function update_json_files(m, input, num_chains, fname_part="data")
     if typeof(input) <: NamedTuple || typeof(input) <: Dict
         for i in 1:num_chains
             open(m.output_base*"_$(fname_part)_$i.json", "w") do f
+            seekstart(f)
             JSON.print(f, input)
         end
         append!(m_field, [m.output_base*"_$(fname_part)_$i.json"])
@@ -62,6 +74,7 @@ function update_json_files(m, input, num_chains, fname_part="data")
         if length(input) == num_chains
             for (i, d) in enumerate(input)
                 open(m.output_base*"_$(fname_part)_$i.json", "w") do f
+                    seekstart(f)
                     JSON.print(f, d)
             end
             append!(m_field, [m.output_base*"_$(fname_part)_$i.json"])
@@ -71,6 +84,7 @@ function update_json_files(m, input, num_chains, fname_part="data")
         @info "only first element in data vector will be used,"
         for i in 1:num_chains
             open(m.output_base*"_$(fname_part)_$i.json", "w") do f
+                seekstart(f)
                 JSON.print(f, input[1])
             end
             append!(m_field, [m.output_base*"_$(fname_part)_$i.json"])

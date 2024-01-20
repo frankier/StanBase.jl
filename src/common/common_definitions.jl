@@ -207,3 +207,31 @@ function setup_diagnostics(m, num_chains)
   end  
 end
 
+"""
+
+Default `output_base` chain files, in tmpdir.
+
+$(SIGNATURES)
+
+# Extended help
+
+Internal, not exported.
+"""
+profile_file_path(output_base::AbstractString, id::Int) =
+  output_base * "_profile_$(id).csv"
+
+
+"""
+Helper function for the profile file generation.
+
+$(SIGNATURES)
+
+# Extended help
+
+"""
+function setup_profiles(m, num_chains)  
+  for i in 1:num_chains
+    append!(m.profile_file, [m.output_base*"_profile_$i.log"])
+  end  
+end
+

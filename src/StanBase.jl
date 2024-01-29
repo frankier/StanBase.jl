@@ -9,6 +9,7 @@ module StanBase
 using DocStringExtensions: FIELDS, SIGNATURES, TYPEDEF
 using Unicode, DelimitedFiles, OrderedCollections
 using DataFrames, CSV, Parameters, NamedTupleTools
+using Primes
 
 using JSON
 

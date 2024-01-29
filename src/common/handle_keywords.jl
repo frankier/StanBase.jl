@@ -21,7 +21,11 @@ function handle_keywords!(m::T, kwrds) where {T <: CmdStanModels}
     for kwrd in keys(kwrds)
         if !(kwrd in [:data, :init])
             if kwrd in accepted_keywords
-                setfield!(m, kwrd, kwrds[kwrd])    
+                if  kwrd == :seed && typeof(kwrds[kwrd]) == Vector{Int}
+                    m.seed = kwrds[kwrd]
+                else
+                    setfield!(m, kwrd, kwrds[kwrd])
+                end
             else
                 @info "Allowed keywords: $(accepted_keywords)"
                 if kwrd in excluded_model_keywords

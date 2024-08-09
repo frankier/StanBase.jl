@@ -48,7 +48,7 @@ Martrix input data is not handled properly in v6.4, please use v6.5
 
 StanBase.jl v4 supports Stan.jl v9 and StanSample v6 which by default use C++ level threads (and chains). This has major consequences for StanSample.jl and Stan.jl (explained in the documentation of Stan.jl v9 and in the on-line help in StanSample.jl v6). As such StanBase.jl v4 is a breaking update.
 
-StanBase.jl versions < v4.0.0 used StanDump.jl to create data.R and init.R files. It is no longer clear if .R files will be supported in future version of cmdstan. Certainly with cmdstan-2.34.1 I have seen error messages when using init.R files. Hence version 4 uses by default JSON.jl for this purpose. I have added a positional `use_json=true` argument to e.g. stan_sample().
+StanBase.jl versions < v4.0.0 used StanDump.jl to create data.R and init.R files. It is no longer clear if .R files will be supported in future version of cmdstan. Certainly with cmdstan-2.35.0 I have seen error messages when using init.R files. Hence version 4 uses by default JSON.jl for this purpose. I have added a positional `use_json=true` argument to e.g. stan_sample().
 
 StanBase v4.7.0 drops support for creating R files (Thanks to Andrew Radcliffe).
 

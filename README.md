@@ -36,7 +36,13 @@ pkg> add StanBase
 ```
 although the intention is that users of Stan's `cmdstan` executable will never have to install StanBase.jl, they can simply install any of the application packages listed [here](https://github.com/StanJulia). 
 
-This and all the method packages need a working [cmdstan](https://mc-stan.org/users/interfaces/cmdstan.html) installation, the path of which you should specify in an evironment variable `CMDSTAN`, e.g. in your `~/.julia/config/startup.jl` have a line like:
+This and all the method packages need a working [cmdstan](https://mc-stan.org/users/interfaces/cmdstan.html) installation, the path of which you should ideally specify using [Preferences.jl](https://github.com/JuliaPackaging/Preferences.jl). Simply set the preference with:
+```julia
+using Preferences
+using StanBase: StanBase
+set_preferences!(StanBase, "CmdStanPath" => "/path/to/stan")
+```
+You can alternatively use in an environment variable `CMDSTAN`, e.g. in your `~/.julia/config/startup.jl` have a line like:
 ```julia
 ENV["CMDSTAN"] = expanduser("~/.../cmdstan/") # replace with your path
 ```

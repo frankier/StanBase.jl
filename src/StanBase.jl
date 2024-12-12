@@ -40,7 +40,9 @@ Executing `versioninfo()` will display the value of `CMDSTAN` if defined.
 CMDSTAN_HOME=""
 
 function __init__()
-  global CMDSTAN_HOME = if haskey(ENV, "CMDSTAN")
+  global CMDSTAN_HOME = if @has_preference("CmdStanPath")
+    @get_preference("CmdStanPath")
+  elseif haskey(ENV, "CMDSTAN")
     ENV["CMDSTAN"]
   elseif isdefined(Main, :CMDSTAN)
     Main.CMDSTAN
